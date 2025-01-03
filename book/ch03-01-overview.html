@@ -1,0 +1,492 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Overview of the Loading and Execution of Programs - RISC-V ALE Manual v0.5</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">RISC-V ALE Manual</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch01-00-overview.html"><strong aria-hidden="true">1.</strong> Overview of the ALE Simulator</a></li><li class="chapter-item expanded "><a href="ch02-00-code-generation-and-inspection.html"><strong aria-hidden="true">2.</strong> Code Generation and Code Inspection</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-tools.html"><strong aria-hidden="true">2.1.</strong> Tools used in the following examples</a></li><li class="chapter-item expanded "><a href="ch02-02-compilation-process.html"><strong aria-hidden="true">2.2.</strong> Overview of the Compilation Process</a></li><li class="chapter-item expanded "><a href="ch02-03-compiling-c-to-risc-v-assembly.html"><strong aria-hidden="true">2.3.</strong> Compiling C Code to RISC-V Assembly Language</a></li><li class="chapter-item expanded "><a href="ch02-04-assembling-programs.html"><strong aria-hidden="true">2.4.</strong> Assembling Programs in Assembly Language</a></li><li class="chapter-item expanded "><a href="ch02-05-generating-the-executable.html"><strong aria-hidden="true">2.5.</strong> Generating the Executable from Object Files and Libraries</a></li><li class="chapter-item expanded "><a href="ch02-06-disassembling.html"><strong aria-hidden="true">2.6.</strong> Disassembling object and executable files</a></li><li class="chapter-item expanded "><a href="ch02-07-makefiles.html"><strong aria-hidden="true">2.7.</strong> Automating the Code Generation Process with Makefiles</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00-running-programs-with-ale-simulator.html"><strong aria-hidden="true">3.</strong> Running Programs with the ALE Simulator</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-overview.html" class="active"><strong aria-hidden="true">3.1.</strong> Overview of the Loading and Execution of Programs</a></li><li class="chapter-item expanded "><a href="ch03-02-execution-with-the-assistant.html"><strong aria-hidden="true">3.2.</strong> Execution with the Assistant</a></li><li class="chapter-item expanded "><a href="ch03-03-debugging-code-with-ale.html"><strong aria-hidden="true">3.3.</strong> Debugging Code with ALE</a></li><li class="chapter-item expanded "><a href="ch03-04-peripherals.html"><strong aria-hidden="true">3.4.</strong> Enabling and Interacting with Peripherals</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-peripherals-in-ale.html"><strong aria-hidden="true">4.</strong> Peripherals in ALE</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-canvas.html"><strong aria-hidden="true">4.1.</strong> Canvas</a></li><li class="chapter-item expanded "><a href="ch04-02-gpt.html"><strong aria-hidden="true">4.2.</strong> GPT</a></li><li class="chapter-item expanded "><a href="ch04-03-midi-synthesizer.html"><strong aria-hidden="true">4.3.</strong> MIDI synthesizer</a></li><li class="chapter-item expanded "><a href="ch04-04-self-driving-car.html"><strong aria-hidden="true">4.4.</strong> Self-Driving Car</a></li><li class="chapter-item expanded "><a href="ch04-05-serial-port.html"><strong aria-hidden="true">4.5.</strong> Serial IO</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-developing-new-assistantas.html"><strong aria-hidden="true">5.</strong> Developing New Execution Assistants</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-assistant-overview.html"><strong aria-hidden="true">5.1.</strong> Overview of How an Assistant Works</a></li><li class="chapter-item expanded "><a href="ch05-02-main-components-api.html"><strong aria-hidden="true">5.2.</strong> API of the Main Components</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-designing-new-peripherals.html"><strong aria-hidden="true">6.</strong> Designing New Peripheral Devices</a></li><li class="chapter-item expanded "><a href="appendix.html"><strong aria-hidden="true">7.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix_installation.html"><strong aria-hidden="true">7.1.</strong> Installing Compilation Tools on Your Computer</a></li><li class="chapter-item expanded "><a href="appendix_online-compilation.html"><strong aria-hidden="true">7.2.</strong> Usando ferramentas de compilação em sistemas online</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">RISC-V ALE Manual v0.5</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/discovery-unicamp/ale-manual" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="overview-of-the-loading-and-execution-of-programs"><a class="header" href="#overview-of-the-loading-and-execution-of-programs">Overview of the Loading and Execution of Programs</a></h2>
+<h3 id="loading-files"><a class="header" href="#loading-files">Loading Files</a></h3>
+<p>The simulator has its own file system that enables storing multiple files.
+To load files, you need to click on the file button <img src="img/ch03_01_button.png" alt="upload button"/> at the top right corner (left of RUN button), and select the files that you wish to load from your computer.</p>
+<p>You can load executable files, source files or even data files to be accessed by your programs.</p>
+<p>There is no directory structure, and existing files with the same name are automatically overwritten, in other words, if you load a file named <code>prog.x</code> more than once, just the last one will be kept.</p>
+<h3 id="run-compilation-assembly-linking-and-execution-of-programs"><a class="header" href="#run-compilation-assembly-linking-and-execution-of-programs">Run: Compilation, Assembly, Linking and Execution of Programs</a></h3>
+<p>Once you have loaded your files, you can start your program execution.
+To do so, you must click on the RUN button (top right corner).</p>
+<p>The simulator will identify the source files and, if necessary, perform the compiling, assembling and linking to get the executable.
+Finally, the simulator will invoke the executable and show the program's output (if there is any).</p>
+<p><strong>NOTE</strong>: The simulator stops the program's execution when (i) the program invokes the system call (<em>syscall</em>) exit, or (ii) when the execution finds invalid instructions.
+In the last case, the simulator may show error messages like "Error: Failed stop: 64 consecutive illegal instructions: 0".
+This is expected in programs that do not call the exit <em>syscall</em>, as the processor doesn't know where the program ends and will continue to execute instructions consecutively, until it finds invalid instructions.</p>
+<h3 id="c-programs-without-libc"><a class="header" href="#c-programs-without-libc">C programs without LibC</a></h3>
+<p>Programs written in C are usually linked to the C standard library and with object files that contain support routines to the application's execution.
+These routines, initialize the C library's data structures, organize the parameters to the main function (<code>_start</code>) and, after returning from the main function, invoke the operating system to signal the end of the application (function <code>exit</code>).</p>
+<h3 id="_start-function-and-exit-syscall"><a class="header" href="#_start-function-and-exit-syscall"><code>_start</code> function and <code>exit</code> <em>syscall</em></a></h3>
+<p>Besides linking the code from multiple object files (<code>.o</code>), the linker must register the address of the entry function of the program on the header of the executable file so that the operating system's loader knows where to start the execution of the program once it starts.
+By default, in C and C++, the program's entry point is defined by the function called <strong>_start</strong>.
+This is a short function that invokes the function <strong>main</strong> and after <strong>main</strong> returns, it invokes the <strong>exit</strong> <em>syscall</em> to inform the operating system that the program has finished.</p>
+<p>When generating the executable files, C and C++ compilers link an object file that has the implementation of this function.
+However, the RISC-V compiler used here doesn't link to such file (nor LibC), this way, it is necessary to include an implementation of the function.</p>
+<p>The following code shows possible implementations to the function <strong>exit</strong> and the function <strong>_start</strong>.
+In this example, the function <strong>exit</strong> consists of a sequence of instructions in assembly language that copies the value of function parameter (code) to the register <code>a0</code>, puts the value 93 on register <code>a7</code> and generates a software interrupt (<code>ecall</code> instruction).
+The software interrupt redirects the execution flow to the operating system, which will use the value on register <code>a7</code> to determine which <em>syscall</em> was requested and the value on register <code>a0</code> as a parameter to the call.</p>
+<pre><code class="language-c">void exit(int code)
+{
+  __asm__ __volatile__(
+    "mv a0, %0           # return code\n"
+    "li a7, 93           # syscall exit (93) \n"
+    "ecall"
+    :             // Output list
+    :"r"(code)    // Input list
+    : "a0", "a7"
+  );
+}
+
+void _start()
+{
+  int ret_code = main();
+  exit(ret_code);
+}
+</code></pre>
+<p>The <strong>_start</strong> function code simply calls the <strong>main</strong> function, which is implemented by the user, and, after <strong>main</strong>'s return, invokes the <strong>exit</strong> function passing the main return value as a parameter.</p>
+<p>You can copy and paste these two functions on your C programs that will be executed on the ALE simulator.
+Alternatively, you can put them in a file called <code>start.c</code> and compile/assemble/link the file with your program.</p>
+<h3 id="read-and-write-syscalls"><a class="header" href="#read-and-write-syscalls"><code>read</code> and <code>write</code> <em>syscalls</em></a></h3>
+<p>In general, programs that execute in computer systems that have an operating system don't have direct access to the system's peripherals (<em>e.g.</em>, monitor, keyboard, mouse, ...), in other words, that can't interact directly with these devices.
+In this case, all interactions with these devices are done via system calls (<em>syscalls</em>).</p>
+<p>The organization of the Linux operating system is strongly based on the concept of files.
+In this context, each file is identified by a path and a name (<em>e.g.</em>, /home/students/john/prog.c).
+In addition to that, when a file is opened by a program, the operating system associates this file with a file descriptor and returns this file descriptor to the program.
+The file descriptor is an integer that must be provided by the program every time it requests the operating system to perform an operation with the file (<em>e.g.</em>, write or read of data).
+In short, to write to (or read from) a file, the program must:</p>
+<ol>
+<li>Invoke the operating system with the <strong>open</strong> <em>syscall</em> to open the file.
+This syscall will open the file and return an integer that corresponds to the file descriptor of the opened file.</li>
+<li>Invoke the <strong>write</strong> or <strong>read</strong> <em>syscall</em> passing as argument the file descriptor of the file and a buffer to write or read data; and, finally</li>
+<li>Invoke the operating system with the <strong>close</strong> <em>syscall</em> to close the file.</li>
+</ol>
+<p>There are three special file descriptors that are always available and don't have to be opened or closed: <code>STDIN</code>, <code>STDOUT</code> and <code>STDERR</code>.
+The values of the file descriptors <code>STDIN</code>, <code>STDOUT</code> and <code>STDERR</code> are 0, 1 e 2, respectively.</p>
+<p>These file descriptors correspond to the standard input, standard output and error output of the program.
+When the program writes to standard output or error output, the operating system shows what was written on the terminal; where the program is being executed.
+In case the program reads from standard input, the operating system (i) waits until the user types something in the standard input and press ENTER, and (ii) returns to the program what was typed in the terminal.</p>
+<p>The following code shows the implementation of a function in C that contains code in RISC-V assembly language to invoke the <em>syscall</em> <strong>read</strong>.
+This function contains a set of RISC-V instructions that adjust the parameters and invoke the operating system to perform the <strong>read</strong> operation through the <strong>read</strong> <em>syscall</em>.</p>
+<pre><code class="language-c">/* read
+ * Parameters:
+ *  __fd:  file descriptor of the file to be read.
+ *  __buf: buffer to store the data read.
+ *  __n:   maximum amount of bytes to be read.
+ * Return:
+ *  Number of bytes read.
+ */
+int read(int __fd, const void *__buf, int __n)
+{
+    int ret_val;
+  __asm__ __volatile__(
+    "mv a0, %1           # file descriptor\n"
+    "mv a1, %2           # buffer \n"
+    "mv a2, %3           # size \n"
+    "li a7, 63           # syscall read code (63) \n"
+    "ecall               # invoke syscall \n"
+    "mv %0, a0           # move return value to ret_val\n"
+    : "=r"(ret_val)                   // Output list
+    : "r"(__fd), "r"(__buf), "r"(__n) // Input list
+    : "a0", "a1", "a2", "a7"
+  );
+  return ret_val;
+}
+
+</code></pre>
+<p>As you don't have access to the C standard library, you can use the function above to perform read operations from the standard input.
+To do so, just call the function <strong>read</strong> to the file descriptor of value 0.
+To use it, you must allocate a buffer, that can be a global variable, like the example below.
+Note that the global variable (<code>input_buffer</code>) is an array with 10 characters, a 10 byte array.
+After reading the data, the <strong>read</strong> function writes the read bytes to the provided buffer and returns the amount of bytes read.
+The last parameter of the <strong>read</strong> function indicates the maximum amount of bytes that must be read.
+In case the amount of bytes that can be read is greater than this value, the <strong>read</strong> function just writes the maximum amount of bytes (10 in the example below) on the input buffer and returns.
+The remaining bytes are stored in an internal buffer of the operating system and are returned when the <strong>read</strong> function is called again.</p>
+<pre><code class="language-c">/* Buffer to store the data read */
+char input_buffer[10];
+
+int main()
+{
+  /* fd = 0 : reads from standard input (STDIN) */
+  int n = read(0, (void*) input_buffer, 10);
+  /* … */
+  return 0;
+}
+
+</code></pre>
+<p>The following code shows a possible C implementation of the function <strong>write</strong>.
+This C function contains a code in RISC-V assembly language to invoke the system call (<em>syscall</em>) <strong>write</strong>.
+It invokes the operating system to <strong>write</strong> <strong>__n</strong> bytes from the buffer __buf on the file (or device) indicated by the file descriptor, parameter __fd.
+When __fd = 1, this function writes to the standard output (STDOUT).</p>
+<pre><code class="language-c">/* write
+ * Parameters:
+ *  __fd:  files descriptor where that will be written.
+ *  __buf: buffer with data to be written.
+ *  __n:   amount of bytes to be written.
+ * Return:
+ *  Number of bytes effectively written.
+ */
+void write(int __fd, const void *__buf, int __n)
+{
+  __asm__ __volatile__(
+    "mv a0, %0           # file descriptor\n"
+    "mv a1, %1           # buffer \n"
+    "mv a2, %2           # size \n"
+    "li a7, 64           # syscall write (64) \n"
+    "ecall"
+    :   // Output list
+    :"r"(__fd), "r"(__buf), "r"(__n)    // Input list
+    : "a0", "a1", "a2", "a7"
+  );
+}
+
+</code></pre>
+<p>Again, as you don't have access to the C standard library, you can use the function above to write to the standard output of the program, in other words, the terminal where your program was executed.
+To do so, just call the function <strong>write</strong> to the file descriptor 1.
+The code below shows an example where the <strong>write</strong> function is called to show a string on the output terminal.</p>
+<pre><code class="language-c">/* Allocates a global string with 5 bytes.
+ *   Note: the break line character, \n is encoded
+ *       with a single byte */
+char my_string[] = "1969\n";
+
+int main()
+{
+  /* Prints the first 5 characters from the string on
+   * the standard output, in other words, 1, 9, 6, 9 and break line. */
+  write(1, my_string, 5);
+
+  return 0;
+}
+
+</code></pre>
+<p>The ALE simulator expects a break line character (<code>\n</code>) to print the content written to the standard output on the terminal.
+This way, you must add a break line character at the end of your buffer or call the function write again with a string that has the break line character.
+The example above shows a program that prints a string with 5 characters ending with a break line.</p>
+<h3 id="complete-example"><a class="header" href="#complete-example">Complete example</a></h3>
+<p>The following program combines all the parts discussed above and implements a program that reads a string from the standard input, makes specific modifications to the string, and writes the modified string to the standard output.</p>
+<pre><code class="language-c">int read(int __fd, const void *__buf, int __n){
+    int ret_val;
+  __asm__ __volatile__(
+    "mv a0, %1           # file descriptor\n"
+    "mv a1, %2           # buffer \n"
+    "mv a2, %3           # size \n"
+    "li a7, 63           # syscall write code (63) \n"
+    "ecall               # invoke syscall \n"
+    "mv %0, a0           # move return value to ret_val\n"
+    : "=r"(ret_val)  // Output list
+    : "r"(__fd), "r"(__buf), "r"(__n)    // Input list
+    : "a0", "a1", "a2", "a7"
+  );
+  return ret_val;
+}
+
+void write(int __fd, const void *__buf, int __n)
+{
+  __asm__ __volatile__(
+    "mv a0, %0           # file descriptor\n"
+    "mv a1, %1           # buffer \n"
+    "mv a2, %2           # size \n"
+    "li a7, 64           # syscall write (64) \n"
+    "ecall"
+    :   // Output list
+    :"r"(__fd), "r"(__buf), "r"(__n)    // Input list
+    : "a0", "a1", "a2", "a7"
+  );
+}
+
+void exit(int code)
+{
+  __asm__ __volatile__(
+    "mv a0, %0           # return code\n"
+    "li a7, 93           # syscall exit (64) \n"
+    "ecall"
+    :   // Output list
+    :"r"(code)    // Input list
+    : "a0", "a7"
+  );
+}
+
+void _start()
+{
+  int ret_code = main();
+  exit(ret_code);
+}
+
+#define STDIN_FD  0
+#define STDOUT_FD 1
+
+/* Buffer to store the data read */
+char input_buffer[10];
+
+
+int main()
+{
+  /* Reads a string from standard input */
+  int n = read(STDIN_FD, (void*) buffer, 10);
+
+  /* Modifies the string */
+
+  /* Replaces the first character with the letter M */
+  buffer[0]   = 'M';
+
+  /* Replaces the last character (n-1) with an exclamation mark and
+   * Adds a newline character to the buffer immediately after the string
+   * NOTE: In the ALE simulator, if the input is typed in the terminal
+   * and followed by pressing Enter, the last character will be a '\n'.
+   */
+  buffer[n-1]   = '!';
+  buffer[n]     = '\n';
+
+  /* Prints the read string and the two added characters
+   * in standard output. */
+  write(STDOUT_FD, (void*) buffer, n+2);
+
+  return 0;
+}
+</code></pre>
+<p>During its execution, the program invokes the operating system to read a string from the standard input, <em>i.e.</em>, from the terminal displayed by the simulator.
+The operating system, in turn, waits until the user types something in the terminal and presses ENTER.
+It then stores the typed string in the buffer provided by the program and returns the number of bytes read.
+Figure 3.1.1 shows the simulator's terminal.
+In this case, to enter data into the standard input, simply click on the terminal window, type the text, and press ENTER.</p>
+<div style="text-align:center">
+<img src="img/ch03_01_01.png" alt="simulator terminal"/>
+<p><span class="caption">Figure 3.1.1: Simulator terminal.</span></p>
+</div>
+<h3 id="enabling-system-calls-in-ale"><a class="header" href="#enabling-system-calls-in-ale">Enabling System Calls in ALE</a></h3>
+<p>The ALE simulator is configurable and allows users to run applications with or without system call (<em>syscall</em>) support.
+To enable or disable <em>syscalls</em>, or to choose which <em>syscalls</em> are available, you can click on the Operating System menu (penguin icon) and adjust the options, as illustrated in Figure 3.1.2.</p>
+<div style="text-align:center">
+<img src="img/ch03_01_02.png" alt="adjust syscalls"/>
+<p><span class="caption">Figure 3.1.2: Adjusting System Call Options in ALE.</span></p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch03-00-running-programs-with-ale-simulator.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch03-02-execution-with-the-assistant.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch03-00-running-programs-with-ale-simulator.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch03-02-execution-with-the-assistant.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

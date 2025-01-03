@@ -1,0 +1,7 @@
+[book]
+title = "RISC-V ALE Manual v0.5"
+authors = ["João Seródio", "Edson Borin"]
+
+[output.html]
+mathjax-support = true
+git-repository-url = "https://github.com/discovery-unicamp/ale-manual"

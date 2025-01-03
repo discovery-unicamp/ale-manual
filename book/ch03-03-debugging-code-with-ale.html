@@ -1,0 +1,436 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Debugging Code with ALE - RISC-V ALE Manual v0.5</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">RISC-V ALE Manual</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch01-00-overview.html"><strong aria-hidden="true">1.</strong> Overview of the ALE Simulator</a></li><li class="chapter-item expanded "><a href="ch02-00-code-generation-and-inspection.html"><strong aria-hidden="true">2.</strong> Code Generation and Code Inspection</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-tools.html"><strong aria-hidden="true">2.1.</strong> Tools used in the following examples</a></li><li class="chapter-item expanded "><a href="ch02-02-compilation-process.html"><strong aria-hidden="true">2.2.</strong> Overview of the Compilation Process</a></li><li class="chapter-item expanded "><a href="ch02-03-compiling-c-to-risc-v-assembly.html"><strong aria-hidden="true">2.3.</strong> Compiling C Code to RISC-V Assembly Language</a></li><li class="chapter-item expanded "><a href="ch02-04-assembling-programs.html"><strong aria-hidden="true">2.4.</strong> Assembling Programs in Assembly Language</a></li><li class="chapter-item expanded "><a href="ch02-05-generating-the-executable.html"><strong aria-hidden="true">2.5.</strong> Generating the Executable from Object Files and Libraries</a></li><li class="chapter-item expanded "><a href="ch02-06-disassembling.html"><strong aria-hidden="true">2.6.</strong> Disassembling object and executable files</a></li><li class="chapter-item expanded "><a href="ch02-07-makefiles.html"><strong aria-hidden="true">2.7.</strong> Automating the Code Generation Process with Makefiles</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00-running-programs-with-ale-simulator.html"><strong aria-hidden="true">3.</strong> Running Programs with the ALE Simulator</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-overview.html"><strong aria-hidden="true">3.1.</strong> Overview of the Loading and Execution of Programs</a></li><li class="chapter-item expanded "><a href="ch03-02-execution-with-the-assistant.html"><strong aria-hidden="true">3.2.</strong> Execution with the Assistant</a></li><li class="chapter-item expanded "><a href="ch03-03-debugging-code-with-ale.html" class="active"><strong aria-hidden="true">3.3.</strong> Debugging Code with ALE</a></li><li class="chapter-item expanded "><a href="ch03-04-peripherals.html"><strong aria-hidden="true">3.4.</strong> Enabling and Interacting with Peripherals</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-peripherals-in-ale.html"><strong aria-hidden="true">4.</strong> Peripherals in ALE</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-canvas.html"><strong aria-hidden="true">4.1.</strong> Canvas</a></li><li class="chapter-item expanded "><a href="ch04-02-gpt.html"><strong aria-hidden="true">4.2.</strong> GPT</a></li><li class="chapter-item expanded "><a href="ch04-03-midi-synthesizer.html"><strong aria-hidden="true">4.3.</strong> MIDI synthesizer</a></li><li class="chapter-item expanded "><a href="ch04-04-self-driving-car.html"><strong aria-hidden="true">4.4.</strong> Self-Driving Car</a></li><li class="chapter-item expanded "><a href="ch04-05-serial-port.html"><strong aria-hidden="true">4.5.</strong> Serial IO</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-developing-new-assistantas.html"><strong aria-hidden="true">5.</strong> Developing New Execution Assistants</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-assistant-overview.html"><strong aria-hidden="true">5.1.</strong> Overview of How an Assistant Works</a></li><li class="chapter-item expanded "><a href="ch05-02-main-components-api.html"><strong aria-hidden="true">5.2.</strong> API of the Main Components</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-designing-new-peripherals.html"><strong aria-hidden="true">6.</strong> Designing New Peripheral Devices</a></li><li class="chapter-item expanded "><a href="appendix.html"><strong aria-hidden="true">7.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix_installation.html"><strong aria-hidden="true">7.1.</strong> Installing Compilation Tools on Your Computer</a></li><li class="chapter-item expanded "><a href="appendix_online-compilation.html"><strong aria-hidden="true">7.2.</strong> Usando ferramentas de compilação em sistemas online</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">RISC-V ALE Manual v0.5</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/discovery-unicamp/ale-manual" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="debugging-code-with-ale"><a class="header" href="#debugging-code-with-ale">Debugging Code with ALE</a></h2>
+<p>The ALE simulator features an interactive interface that allows users to control program execution and inspect the values of registers and memory.
+This interface is very similar to the GDB debugger's interface, enabling users to debug their code's execution.</p>
+<h3 id="overview-of-the-interactive-interface"><a class="header" href="#overview-of-the-interactive-interface">Overview of the interactive interface</a></h3>
+<p>To enable the interactive execution interface, simply click the arrow next to the RUN button and select the "Debug" option, as illustrated in Figure 3.3.1.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_01.png" alt="debug option"/>
+<p><span class="caption">Figure 3.3.1: Select the "Debug" option.</span></p>
+</div>
+<p>Once you clicked on the Debug option, the simulator will open an interactive terminal where you can enter commands to control execution and/or inspect the state of the memory and registers of the RISC-V processor.
+Figure 3.3.2 shows an interactive terminal.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_02.png" alt="interactive terminal"/>
+<p><span class="caption">Figure 3.3.2: Interactive terminal in the ALE simulator.</span></p>
+</div>
+<h3 id="debugging-commands"><a class="header" href="#debugging-commands">Debugging commands</a></h3>
+<p>To see the complete list of available commands in debug mode, you can run the <code>help</code> command in the interactive terminal.
+Simply type <code>help</code> in the interactive terminal and press ENTER.
+A portion of the command list displayed by the <code>help</code> command is shown below.</p>
+<pre><code class="language-bash">run
+  Run till interrupted.
+until &lt;address&gt;
+  Run until address or interrupted.
+step [&lt;n&gt;]
+  Execute n instructions (1 if n is missing).
+peek &lt;res&gt; &lt;addr&gt;
+  Print value of resource res (one of r, f, c, m) and address addr.
+  For memory (m) up to 2 addresses may be provided to define a range
+  of memory locations to be printed.
+  examples: peek r x1   peek c mtval   peek m 0x4096
+peek pc
+  Print value of the program counter.
+peek all
+  Print value of all non-memory resources
+poke res addr value
+  Set value of resource res (one of r, c or m) and address addr
+  Examples: poke r x1 0xff  poke c 0x4096 0xabcd
+symbols
+  List all the symbols in the loaded ELF file(s).
+quit
+  Terminate the simulator
+</code></pre>
+<p>The following table summarizes the main commands available in the interactive interface of the ALE simulator:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Command</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>symbols</code></td><td style="text-align: left">Shows the address of symbols (<em>e.g.</em>, <code>_start</code>, <code>loop</code>, <code>end</code>, <code>result</code>) of the program. The address is displayed in hexadecimal format (<em>e.g.</em>, <code>0x11180</code>).</td></tr>
+<tr><td style="text-align: left"><code>until &lt;address&gt;</code></td><td style="text-align: left">Executes instructions of the program until a certain address. The address must be provided in hexadecimal format (<em>e.g.</em>, <code>0x11180</code>).</td></tr>
+<tr><td style="text-align: left"><code>step [n=1]</code></td><td style="text-align: left">Executes the next n instructions</td></tr>
+<tr><td style="text-align: left"><code>peek r &lt;register&gt;</code></td><td style="text-align: left">Displays the value stored in register <register> (<em>e.g.</em>, <code>peek r x1</code> or <code>peek r mtval</code>). The value is shown in hexadecimal format. The command <code>peek r all</code> shows the value of all registers.</td></tr>
+<tr><td style="text-align: left"><code>peek m &lt;address&gt;</code></td><td style="text-align: left">Displays the value stored in the memory word at address <code>&lt;address&gt;</code>. The value is shown in hexadecimal format.</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>poke r &lt;register&gt; &lt;value&gt;</code></td><td style="text-align: left">Modifies the content of register <code>&lt;register&gt;</code> with the value <code>&lt;value&gt;</code>. For example, the command <code>poke r x1 0xff</code> stores the value <code>0xff</code> in register <code>x1</code>.</td></tr>
+<tr><td style="text-align: left"><code>poke m &lt;address&gt; &lt;value&gt;</code></td><td style="text-align: left">Modifies the content of the memory location associated with address <code>&lt;address&gt;</code> with the value <code>&lt;value&gt;</code>. For example, the command <code>poke m 0x800 0xfe</code> writes the value <code>0xfe</code> to the memory location associated with address <code>0x800</code>.</td></tr>
+<tr><td style="text-align: left"><code>run</code></td><td style="text-align: left">Executes the program until it terminates through a system call <code>exit</code> or encounters invalid instructions.</td></tr>
+</tbody></table>
+</div>
+<h3 id="interactive-execution-example"><a class="header" href="#interactive-execution-example">Interactive execution example</a></h3>
+<p>In this section, we will show an example of interactive execution with the ALE simulator.
+For this, we will use the program <code>simple-debug.s</code>, as follows:</p>
+<pre><code class="language-riscvasm">.globl _start
+
+_start:
+  li x11, 21          # loads the value 21 into register x11
+  li x12, 21          # loads the value 21 into register x12
+  add x10, x11, x12   # adds the contents of registers x11 and x12 and
+                      # stores the result in register x10
+  li a7, 93           # loads the value 93 into register a7
+  ecall               # generates a software interrupt
+</code></pre>
+<p>This program loads the value 21 into registers <code>x11</code> and <code>x12</code>, performs the addition of these values, and stores the result in register <code>x10</code>.
+Finally, it invokes the <code>exit</code> <em>syscall</em>.
+To do this, the program loads the value 93 into register <code>a7</code> and generates a software interrupt by executing the <code>ecall</code> instruction.</p>
+<p>The first step is to load the <code>simple-debug.s</code> file into the simulator.
+To do this, simply use the file upload button (blue), as discussed in Chapter 3.1.
+Next, you should open the interactive execution terminal by clicking on the debug button, as presented in Chapter 3.3.1.
+Once you open the interactive execution terminal, you should see messages indicating that the <code>simple-debug.s</code> program has been assembled and its execution has begun in interactive mode, as illustrated in Figure 3.3.3.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_03.png" alt="debug option"/>
+<p><span class="caption">Figure 3.3.3: Interactive terminal opened right after loading the file <code>simple-debug.s</code>.</span></p>
+</div>
+<p>Now, simply click on the terminal and type commands to interact with the simulator.
+To illustrate this procedure, we will execute the following sequence of commands:</p>
+<pre><code>peek r x11
+step
+peek r x11
+</code></pre>
+<p>Figure 3.3.4 shows the interactive terminal after executing the commands <code>peek r x11</code>, <code>step</code>, and <code>peek r x11</code>.
+The first command shows that the content of register <code>x11</code> is zero (0x00000000).
+The second command advances the execution of the program by one instruction.
+Note that the simulator displays the instruction <code>addi x11, x0, 0x15</code>, which adds the content of register <code>x0</code> (which is always zero<sup class="footnote-reference"><a href="#1">1</a></sup>) to the constant <code>0x15</code> (<em>i.e.</em>, 21 in decimal), and stores the result in register <code>x11</code>.
+In our assembly language program, we had the instruction <code>li x11, 21</code> (load immediate), which loads the value 21 into register <code>x11</code>.
+The load immediate instruction is a pseudo-instruction (it does not exist in the architecture) and is usually transformed by the assembler into an <code>addi</code> instruction.
+Finally, the third command inspects the content of register <code>x11</code>.
+Note that this time it contains the value 21 (0x00000015).</p>
+<p>Also note that, the interactive terminal outputs some informations regarding the instruction that was executed in the format:</p>
+<div style="text-align:center">
+#{Inst Num} 0 {Mem Addr} {Inst Code} {Inst Type} {Val} {Mnemonic}
+</div>
+<ul>
+<li><strong>Inst Num</strong>: number of the machine instruction that was executed</li>
+<li><strong>Mem Addr</strong>: memory address of the instruction that was executed.</li>
+<li><strong>Inst Code</strong>: code of the instruction that was executed.</li>
+<li><strong>Inst Type</strong>: can be either <code>r</code> if the instruction uses only register or <code>m</code> if there is a memory access (store or load).</li>
+<li><strong>Val</strong>: value stored in the <code>rd</code> register for instructions of type <code>r</code> or stored in the memory position accessed for type <code>m</code> instructions.</li>
+<li><strong>Mnemonic</strong>: assembly mnemonic of the executed instruction.</li>
+</ul>
+<p>The second occurrence of the instruction #1 can be ignored.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_04.png" alt="interactive terminal commands"/>
+<p><span class="caption">Figure 3.3.4: Interactive terminal after executing the commands <code>peek r x11</code>, <code>step</code> and <code>peek r x11</code>.</span></p>
+</div>
+<p>Now, we will execute the following sequence of commands to advance our program to the end, that is, until we invoke the <code>exit</code> <em>syscall</em>.</p>
+<pre><code>step
+step
+step
+peek r x10
+step
+</code></pre>
+<p>The first three <code>step</code> commands advance the execution to the <code>ecall</code> instruction, executing the instructions <code>li x12, 21</code>, <code>add x10, x11, x12</code>, and <code>li a7, 93</code>.
+The next command displays the content of register <code>x10</code>.
+Finally, the last command advances the execution, causing the simulator to execute the <code>ecall</code> instruction.
+Figure 3.3.5 shows the interactive terminal after executing these commands.
+Notice that, again, the <code>li</code> instructions from the source program were encoded as <code>addi</code> instructions.
+Also, the value of register <code>x10</code> has been changed to <code>0x2a</code> (42 in decimal).
+Finally, note that the program ended with code 42.
+This occurred because we passed the value 42<sup class="footnote-reference"><a href="#2">2</a></sup> as a parameter to the <code>exit</code> <em>syscall</em>.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_05.png" alt="interactive terminal commands 2"/>
+<p><span class="caption">Figure 3.3.5: Interactive terminal after executing the commands <code>step</code>, <code>step</code>, <code>step</code>, <code>peek r x10</code>, <code>step</code>.</span></p>
+</div>
+<p>In the example above, we used the <code>step</code> command to advance the program execution instruction by instruction.
+However, in many situations, it is useful to advance the simulation automatically to a certain point in the program.
+To do this, you can use the <code>until</code> command.
+This command takes as a parameter the address of the instruction where you want to advance to.</p>
+<p>In Figure 3.3.5, we see that the <code>ecall</code> instruction is at address <code>0x000110c4</code>.
+Therefore, if we wanted to advance execution to this point, we could execute the command <code>until 0x000110c4</code>.
+Figure 3.3.6 shows the interactive terminal after executing the command <code>until 0x000110c4</code>.
+Note that the simulator displayed the execution of the first four instructions of the program.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_06.png" alt="interactive terminal commands 3"/>
+<p><span class="caption">Figure 3.3.6: Interactive terminal after executing the command <code>until 0x000110c4</code>.</span></p>
+</div>
+<h4 id="identifying-the-address-associated-with-instructions"><a class="header" href="#identifying-the-address-associated-with-instructions">Identifying the address associated with instructions</a></h4>
+<p>As seen above, you can use the address of an instruction to advance execution to the desired instruction.
+To do this, you need the address of the instruction.
+The most direct way to obtain the address of an instruction is by using the disassembler.
+To do this, you need to disassemble the final executable file.
+Chapter 2.6 discusses how to use the disassembler.</p>
+<p>Another way to identify the address of an instruction is from the label that precedes it in the code.
+In our example, the address of the first instruction corresponds to the address of the label <code>_start</code>.
+To identify the addresses associated with the labels in your program, simply execute the <code>symbols</code> command.</p>
+<p>If the instruction of interest does not have a preceding label, you can add a new label (with a name different from other labels in the program).
+This label will not affect code generation, <em>i.e</em>, the set of emitted instructions will remain the same.
+The following code snippet shows the <code>simple-debug-2.s</code> program modified with a label to facilitate the identification of the address of the instruction <code>li a7, 93</code>.
+When you load this program into the simulator and execute the symbols command in the interactive terminal, you will see the addresses associated with the symbols <code>_start</code> and <code>before_exit</code>.</p>
+<pre><code class="language-riscvasm">.globl _start
+_start:
+  li x11, 21          # loads the value 21 into register x11
+  li x12, 21          # loads the value 21 into register x12
+  add x10, x11, x12   # adds the contents of registers x11 and x12 and 
+                      # stores the result in register x10
+before_exit:
+  li a7, 93           # loads the value 93 into register a7
+  ecall               # generates a software interrupt
+
+</code></pre>
+<h3 id="terminal-io-in-debug-mode"><a class="header" href="#terminal-io-in-debug-mode">Terminal IO in Debug Mode</a></h3>
+<p>When in debug mode, there are two ways in which you can provide an input to your program in case a <code>read</code> <em>syscall</em> is called.
+The first one is to use the <strong>Standard IO</strong> textbox to load the input, and the second is to use the <code>write-stdin</code> command followed by the input string on the terminal input.
+These two ways are demonstrated with images below.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_07.png" alt="os standard io"/>
+<p><span class="caption">Figure 3.3.7: Loading input using the OS <strong>Standard IO</strong>.</span></p>
+</div>
+<div style="text-align:center">
+<img src="img/ch03_03_08.png" alt="os standard io after"/>
+<p><span class="caption">Figure 3.3.8: Simulator after loading the input.</span></p>
+</div>
+<p>Figure 3.3.7 shows how to use the OS to load the input that will be read by the program.
+First go to the OS tab (1) and write your input on the textbox (2), then run your code in debug mode until the point where the input is expected (3).
+Finally, load the input by clicking on the button (4).
+Figure 3.3.8 presents the terminal after loading the input, as the code just reads an input and writes it to STDOUT you can see that the input (<em>Hello World</em>) is printed on the screen and the program exits.
+The input can also be loaded prior to the program execution (step 4 before 3).</p>
+<div style="text-align:center">
+<img src="img/ch03_03_09.png" alt="io blocked program"/>
+<p><span class="caption">Figure 3.3.9: Blocked program waiting for input in Debug Mode.</span></p>
+</div>
+<div style="text-align:center">
+<img src="img/ch03_03_10.png" alt="write-stdin command usage"/>
+<p><span class="caption">Figure 3.3.10: Command <code>write-stdin</code> is used to set input in debug mode.</span></p>
+</div>
+<p>The other way that can be used to provide input to your program is via the <code>write-stdin</code> command.
+When the program reaches a point where the <code>read</code> <em>syscall</em> is invoked, it blocks waiting for the input, and the user can use the terminal as shown in Figure 3.3.9.
+Figure 3.3.10 shows the <code>write-stdin</code> followed by the input string being used, and after the command the program continues its execution using the provided input.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>In RISC-V, register <code>x0</code> always holds the fixed value of zero.
+Even if an instruction tries to write something to this register, the value zero will be preserved in the register.</p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>The <code>exit</code> <em>syscall</em> expects a parameter, which is the exit code, in register <code>a0</code> (which is an alias for register <code>x10</code>).</p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p>Although the object file contains the same instructions as the final executable file, the address of the instructions is usually modified by the linking process.
+Therefore, you should use the final executable file when you want to identify the addresses of the instructions.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch03-02-execution-with-the-assistant.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch03-04-peripherals.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch03-02-execution-with-the-assistant.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch03-04-peripherals.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

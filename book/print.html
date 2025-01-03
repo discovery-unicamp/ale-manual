@@ -1,0 +1,1188 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>RISC-V ALE Manual v0.5</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">RISC-V ALE Manual</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch01-00-overview.html"><strong aria-hidden="true">1.</strong> Overview of the ALE Simulator</a></li><li class="chapter-item expanded "><a href="ch02-00-code-generation-and-inspection.html"><strong aria-hidden="true">2.</strong> Code Generation and Code Inspection</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-tools.html"><strong aria-hidden="true">2.1.</strong> Tools used in the following examples</a></li><li class="chapter-item expanded "><a href="ch02-02-compilation-process.html"><strong aria-hidden="true">2.2.</strong> Overview of the Compilation Process</a></li><li class="chapter-item expanded "><a href="ch02-03-compiling-c-to-risc-v-assembly.html"><strong aria-hidden="true">2.3.</strong> Compiling C Code to RISC-V Assembly Language</a></li><li class="chapter-item expanded "><a href="ch02-04-assembling-programs.html"><strong aria-hidden="true">2.4.</strong> Assembling Programs in Assembly Language</a></li><li class="chapter-item expanded "><a href="ch02-05-generating-the-executable.html"><strong aria-hidden="true">2.5.</strong> Generating the Executable from Object Files and Libraries</a></li><li class="chapter-item expanded "><a href="ch02-06-disassembling.html"><strong aria-hidden="true">2.6.</strong> Disassembling object and executable files</a></li><li class="chapter-item expanded "><a href="ch02-07-makefiles.html"><strong aria-hidden="true">2.7.</strong> Automating the Code Generation Process with Makefiles</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00-running-programs-with-ale-simulator.html"><strong aria-hidden="true">3.</strong> Running Programs with the ALE Simulator</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-overview.html"><strong aria-hidden="true">3.1.</strong> Overview of the Loading and Execution of Programs</a></li><li class="chapter-item expanded "><a href="ch03-02-execution-with-the-assistant.html"><strong aria-hidden="true">3.2.</strong> Execution with the Assistant</a></li><li class="chapter-item expanded "><a href="ch03-03-debugging-code-with-ale.html"><strong aria-hidden="true">3.3.</strong> Debugging Code with ALE</a></li><li class="chapter-item expanded "><a href="ch03-04-peripherals.html"><strong aria-hidden="true">3.4.</strong> Enabling and Interacting with Peripherals</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-peripherals-in-ale.html"><strong aria-hidden="true">4.</strong> Peripherals in ALE</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-canvas.html"><strong aria-hidden="true">4.1.</strong> Canvas</a></li><li class="chapter-item expanded "><a href="ch04-02-gpt.html"><strong aria-hidden="true">4.2.</strong> GPT</a></li><li class="chapter-item expanded "><a href="ch04-03-midi-synthesizer.html"><strong aria-hidden="true">4.3.</strong> MIDI synthesizer</a></li><li class="chapter-item expanded "><a href="ch04-04-self-driving-car.html"><strong aria-hidden="true">4.4.</strong> Self-Driving Car</a></li><li class="chapter-item expanded "><a href="ch04-05-serial-port.html"><strong aria-hidden="true">4.5.</strong> Serial IO</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-developing-new-assistantas.html"><strong aria-hidden="true">5.</strong> Developing New Execution Assistants</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-assistant-overview.html"><strong aria-hidden="true">5.1.</strong> Overview of How an Assistant Works</a></li><li class="chapter-item expanded "><a href="ch05-02-main-components-api.html"><strong aria-hidden="true">5.2.</strong> API of the Main Components</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-designing-new-peripherals.html"><strong aria-hidden="true">6.</strong> Designing New Peripheral Devices</a></li><li class="chapter-item expanded "><a href="appendix.html"><strong aria-hidden="true">7.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix_installation.html"><strong aria-hidden="true">7.1.</strong> Installing Compilation Tools on Your Computer</a></li><li class="chapter-item expanded "><a href="appendix_online-compilation.html"><strong aria-hidden="true">7.2.</strong> Usando ferramentas de compilação em sistemas online</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">RISC-V ALE Manual v0.5</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/discovery-unicamp/ale-manual" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="risc-v-ale-manual"><a class="header" href="#risc-v-ale-manual">RISC-V ALE Manual</a></h1>
+<p><em>Manual for <a href="https://riscv-programming.org/ale/#home">RISC-V ALE Simulator</a></em></p>
+<p>Contributors:</p>
+<ul>
+<li>João Seródio</li>
+<li>Edson Borin</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>This manual aims to present the main concepts and interfaces for using the RISC-V ALE simulator.</p>
+<p>Chapter 1 provides an overview of the ALE simulator, Chapter 2 outlines the process of generating and inspecting RISC-V code. Chapter 3 discusses the different ways of running code in the simulator and their functionalities. Chapter 4 presents the main peripherals of the simulator. Finally, Chapter 5 and 6 explain how to develop new execution assistants and design new peripherals for the simulation environment.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overview-of-the-ale-simulator"><a class="header" href="#overview-of-the-ale-simulator">Overview of the ALE Simulator</a></h1>
+<p>The ALE simulator is a web-based assembly simulator ecosystem, built on top of the
+<a href="https://github.com/chipsalliance/VeeR-ISS">CHIPS Alliance VeeR-ISS</a> simulator.
+ALE consists of a set of WebAssembly artifacts and JavaScript (JS) code, that enables the execution of VeeR-ISS in the browser with an interactive user interface (UI).
+The UI provides functionalities that allow the user to load files, set syscalls and inputs to the program, and enable/disable external devices. In order to start the simulator, the user can either use the UI buttons (RUN, Debug, or Assistant-&gt;Run Tests) or use the terminal.
+When using the buttons, the terminal will be popped open and display the commands that are being executed, these commands can be run in the terminal in a standalone manner, if necessary.</p>
+<p>Figure 1.0.1 shows an overview of the components that make up the simulator.
+Whisper, CLANG and LLD are third party softwares that were compiled to WebAssembly.
+Whisper is the RISC-V simulator, CLANG and LLD are LLVM compilation tools made available to run in the browser, facilitating code generation.
+They are exposed by using a JS wrapper that uses event handling and message passing to interact with the remaining components.
+The Assistant Script is a customizable component that can dictate how to execute a given program with a set of inputs and expected outputs, this custom logic is encoded in a URL.
+The peripherals are external devices that can be enabled, they are components with a fixed logic and are used to simulate the interaction with external devices.
+Most of the peripherals are pure JS code, but the Self-Driving Car and Uóli are Unity simulations with a JS wrapper that provides an interface to the peripheral to handle events.
+Assistant Scripts and Peripherals are explained in more detail in chapters 5 and 6 respectively.
+Lastly, the bus represents the common stream of events/messages of the web application that all the components listen to and handle according to their logic.</p>
+<div style="text-align:center">
+<img src="img/ch01_00_01.png" alt="ale components"/>
+<p><span class="caption">Figure 1.0.1: RISC-V ALE Components.</span></p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="code-generation-and-code-inspection"><a class="header" href="#code-generation-and-code-inspection">Code Generation and Code Inspection</a></h1>
+<p>Understanding the compilation workflow and the tools available in the code generation ecosystem are important prerequisites when it comes to working with assembly programming.
+This chapter presents a small overview of these topics.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="tools-used-in-this-chapter"><a class="header" href="#tools-used-in-this-chapter">Tools used in this chapter</a></h2>
+<p>There are several tools to generate and inspect source and binary code.
+For example, both the GNU GCC and CLANG tools can be used to compile C source code.
+The following tools are used in this manual.</p>
+<ul>
+<li><a href="https://clang.llvm.org/">CLANG</a>: a C language family frontend for LLVM is a compiler.</li>
+<li><a href="https://lld.llvm.org/">LLD</a>: LLVM Linker.</li>
+</ul>
+<p>Appendix A contains instructions to install both tools.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="overview-of-the-compilation-process"><a class="header" href="#overview-of-the-compilation-process">Overview of the Compilation Process</a></h2>
+<p>The compilation process of a C language program involves three main stages:</p>
+<ol>
+<li><strong>Compilation</strong>: Each file with C code (with a <code>.c</code> extension) is translated into assembly language code (files with a <code>.s</code> extension).</li>
+<li><strong>Assembly</strong>: The assembler reads the assembly language files and produces an object code (with a <code>.o</code> extension on Linux).
+Note that complex software may consist of multiple source code files, resulting in various object files during the compilation process.
+Even though object files contain machine language code, they are not executable as the binary code is still separated into different object files and needs to be "linked" into a single file containing the entire code.</li>
+<li><strong>Linking</strong>: The linker reads multiple object files as input, links them together, and also links code from libraries.
+The result is the final executable, the program that can be run by the user.
+Figure 2.1 illustrates the compilation process of software with two source files: <code>source1.c</code> and <code>source2.c</code>.
+In this diagram, the <code>gcc -S</code> command invokes the compiler, the <code>as</code> command invokes the assembler, and finally, the <code>ld</code> command invokes the linker.</li>
+</ol>
+<div style="text-align:center">
+<img src="img/ch02_02_01.png" alt="compilation process"/>
+<p><span class="caption">Figure 2.2.1: The compilation process of a program using GNU tools.</span></p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="compiling-c-code-to-risc-v-assembly-language"><a class="header" href="#compiling-c-code-to-risc-v-assembly-language">Compiling C Code to RISC-V Assembly Language</a></h2>
+<p>By default, compilers perform the entire compilation, assembly, and linking process when invoked from the command line.
+To interrupt the compilation process after translating C code to assembly language, you must pass a flag to the compiler on the command line.
+In the case of <code>gcc</code> and <code>clang</code>, this flag is <code>-S</code>.
+The following command illustrates how to translate C code from the file <code>prog.c</code> to assembly language and save the result in the <code>prog.s</code> file.</p>
+<pre><code class="language-bash">clang -S prog.c -o prog.s
+</code></pre>
+<p>To test the above command, you can create a text file called <code>prog.c</code> and place the following content:</p>
+<pre><code class="language-c">/* Program that returns the answer to the Ultimate Question of
+ * Life, the Universe, and Everything */
+int main(void) {
+  return 42;
+}
+</code></pre>
+<p>The command <code>clang -S prog.c -o prog.s</code> will produce code for the native machine's assembly language, i.e., for the machine running the compiler.
+If you are running the compiler on a computer with an Intel or AMD processor, this means you will produce assembly language code for the x86 architecture family.
+Since we are interested in producing code for RISC-V, we need to inform the compiler with special flags.
+In the case of <code>clang</code>, we will use the flags <code>--target=riscv32</code>, <code>-march=rv32g</code>, and <code>-mabi=ilp32d</code>.
+These flags configure the compiler to emit code for 32-bit RISC-V.
+The code below illustrates the compilation of the code from the file <code>prog.c</code> to RISC-V assembly language:</p>
+<pre><code>clang --target=riscv32 -march=rv32g -mabi=ilp32d -mno-relax prog.c -S -o prog.s
+</code></pre>
+<p>You can check the contents of the <code>prog.s</code> file (produced by the above command) by opening it in your favorite text editor.
+It is a text file and contains the same program you wrote in C, but transcribed into assembly language for the RISC-V RV32 architecture.
+Note that assembly language refers to instructions (add, mv, etc.) and other elements specific to each type of processor and, consequently, is dependent on the processor's interface.</p>
+<p><strong>Note</strong>: In case your system runs on x86 or ARM based processors, if you compare the code produced for the native architecture and the code produced for RISC-V RV32, you will notice that the instructions generated by the compiler are quite different.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="assembling-programs-in-assembly-language"><a class="header" href="#assembling-programs-in-assembly-language">Assembling Programs in Assembly Language</a></h2>
+<p>The assembler converts the program in assembly language to machine language and stores it in an object file (<code>.o</code>).
+To directly invoke the GNU assembler, you can use the as command, as illustrated below.</p>
+<p><strong>Note</strong>: By default, the <code>as</code> program assembles programs in assembly language for the native architecture.
+Therefore, if you are running the as tool on a machine that does not have a RISC-V processor, it will generate an error if you try to assemble a RISC-V assembly program.</p>
+<pre><code>as prog.s -o prog.o
+</code></pre>
+<p>In this case, the assembler will store the result in the <code>prog.o</code> file.
+Instead of directly calling the <code>as</code> command, you can use the compiler driver itself (<code>gcc</code> for GCC and <code>clang</code> for CLANG) to invoke the assembler.
+To do this, simply use the command that invokes the compiler driver and pass the assembly language file as a parameter.
+For example, with <code>clang</code>, you can execute:</p>
+<pre><code>clang --target=riscv32 -march=rv32g -mabi=ilp32d -mno-relax prog.s -c -o prog.o
+</code></pre>
+<p>In this example, we use the <code>-c</code> flag to instruct the compiler driver to stop the process after generating the object file.
+If we didn't do this, the compiler driver would attempt to call the linker to generate the final executable.</p>
+<p>You should not open the produced file (<code>prog.o</code>) in your text editor, as it is a binary file.
+To analyze this file, you need special programs called "disassemblers" that interpret the file's content and convert its representation to human readable text.
+These tools will be discussed in Chapter 2.6.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="generating-the-executable-from-object-files-and-libraries"><a class="header" href="#generating-the-executable-from-object-files-and-libraries">Generating the Executable from Object Files and Libraries</a></h2>
+<p>Once you have produced all the object files for your program, as illustrated in Figure 2.1, you need to combine all these files with libraries into a single executable file.
+This process, called linking, is performed by the linker.
+There are several tools that link object files with libraries.
+The following example shows how we can use the <code>ld.lld</code> tool to combine the contents of the <code>prog.o</code>, <code>module1.o</code>, and <code>module2.o</code> files and produce the executable file <code>prog.x</code>.</p>
+<pre><code>ld.lld prog.o module1.o module2.o -o prog.x
+</code></pre>
+<p>If your program contains only one source file (e.g., <code>prog.o</code>), then simply pass this file to the linker, as illustrated below:</p>
+<pre><code>ld.lld prog.o -o prog.x
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="disassembling-object-and-executable-files"><a class="header" href="#disassembling-object-and-executable-files">Disassembling object and executable files</a></h2>
+<p>Object files (.o) and executable files (.x) are binary files, and common text editors cannot display their contents in a readable form.
+To analyze these files, you need special programs called "disassemblers", which interpret the file's contents and convert its representation to text.
+You can use the GNU disassembler tool, <code>objdump</code>, or the <code>llvm-objdump</code> tool to disassemble the binary file and display its information in a textual format.
+To do this, simply execute the command:</p>
+<pre><code>llvm-objdump -D prog.o
+</code></pre>
+<p>Compare the output produced by the disassembler (<code>llvm-objdump</code>) with the assembly language program file used during the assembly process (<code>prog.s</code>).
+You'll notice that they are different, but share several common elements (e.g., lists of instructions to be executed by the processor).</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="automating-the-code-generation-process-with-makefiles"><a class="header" href="#automating-the-code-generation-process-with-makefiles">Automating the Code Generation Process with Makefiles</a></h2>
+<p>The software development process involves multiple iterations of bug fixes and recompilations.
+However, many of these projects have a large amount of source code files, and compiling all of them is a slow process.
+The object files (<code>.o</code>) need to be linked again to form the new binary, but only the modified files need to be recompiled.
+Therefore, it is important to have an automatic mechanism to recompile only the necessary files.
+For this purpose, there is a specific type of script designed to automate software compilation.
+The GNU Makefile is a widely used example in the GNU/Linux world.
+To install it on a Debian-based distribution, you can run the following command:</p>
+<pre><code>sudo apt-get install build-essential
+</code></pre>
+<p>To create your own script that will instruct GNU Make to build your program, you should create a text file named <code>Makefile</code>, which should be in the same directory as the source code, containing rules for creating each file.
+For example, you can create rules to specify how the <code>.s</code> file (in assembly language) is generated (using the <code>clang</code> compiler), how the object files <code>.o</code> (object code) are created (using the assembler), and so on.
+Here is an example of some rules:</p>
+<pre><code>ola.s: ola.c
+	clang --target=riscv32 -march=rv32g -mabi=ilp32d -mno-relax ola.c -S -o ola.s
+
+ola.o: ola.s
+	clang --target=riscv32 -march=rv32g -mabi=ilp32d -mno-relax ola.s -c -o ola.o
+</code></pre>
+<p>In this example, there are two rules named <code>ola.o</code> and <code>ola.s</code>.
+The rule name should correspond to the file that is produced by the rule, followed by a colon ":".
+For example, the rule that produces the <code>ola.o</code> file should be named "ola.o:".
+The files required to produce the <code>ola.o</code> file should appear in a list (separated by spaces) after the colon ":" (in our case, <code>ola.s</code> is required to create <code>ola.o</code>).
+Then, on the next line, you must use a tab (press the tab key) and type the command that will be executed in the shell to produce that file.
+In our example, we call the <code>clang</code> compiler to translate a C file into assembly language, and in another rule, we call the assembler to transform an assembly language <code>.s</code> file into an object file <code>.o</code>.
+Note that you can specify the name of another rule as the input file for a rule, and that rule will be invoked first to produce the required input file.
+<strong>IMPORTANT</strong>: The script will not work if there is no tab (tab) before the commands "clang ..."!
+Do not use spaces!
+Additionally, note that some text editors insert spaces instead of tab characters when the tab key is pressed.</p>
+<p>You can create multiple rules in the same Makefile.
+To run the script, on the command line, type <code>make rule-name</code>. For example:</p>
+<pre><code>make ola.o
+</code></pre>
+<p>The <code>make</code> program will execute the commands associated with the <code>ola.o</code> rule described in the Makefile.
+Note that the make program always reads the file named Makefile in the current directory and uses it as a script.
+If you do not use this file name (Makefile with a capital "M"), the script will fail.
+If you invoke the <code>make</code> command without any parameters, it will execute the first rule in the Makefile.</p>
+<p>The links below provide more information about Makefiles:</p>
+<ul>
+<li><a href="http://www.gnu.org/software/make/manual/make.html#Simple-Makefile">Original Manual (English)</a></li>
+<li><a href="http://pt.wikibooks.org/wiki/Programar_em_C/Makefiles">Portuguese guide</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="running-programs-with-the-ale-simulator"><a class="header" href="#running-programs-with-the-ale-simulator">Running Programs with the ALE Simulator</a></h1>
+<p>Running a program written in RISC-V assembly language requires either RISC-V hardware or a simulator.
+Since our computers do not have RISC-V processors, we will use the RISC-V ALE simulator to run programs compiled for RISC-V.</p>
+<p>The RISC-V ALE simulator will run in your web browser (e.g., Chrome or Firefox). To do this, simply visit the page https://riscv-programming.org/ale/.
+Figure 3.0.1 illustrates the initial interface of the simulator.</p>
+<div style="text-align:center">
+<img src="img/ch03_00_01.png" alt="simulator interface"/>
+<p><span class="caption">Figure 3.0.1: Initial simulator interface.</span></p>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="overview-of-the-loading-and-execution-of-programs"><a class="header" href="#overview-of-the-loading-and-execution-of-programs">Overview of the Loading and Execution of Programs</a></h2>
+<h3 id="loading-files"><a class="header" href="#loading-files">Loading Files</a></h3>
+<p>The simulator has its own file system that enables storing multiple files.
+To load files, you need to click on the file button <img src="img/ch03_01_button.png" alt="upload button"/> at the top right corner (left of RUN button), and select the files that you wish to load from your computer.</p>
+<p>You can load executable files, source files or even data files to be accessed by your programs.</p>
+<p>There is no directory structure, and existing files with the same name are automatically overwritten, in other words, if you load a file named <code>prog.x</code> more than once, just the last one will be kept.</p>
+<h3 id="run-compilation-assembly-linking-and-execution-of-programs"><a class="header" href="#run-compilation-assembly-linking-and-execution-of-programs">Run: Compilation, Assembly, Linking and Execution of Programs</a></h3>
+<p>Once you have loaded your files, you can start your program execution.
+To do so, you must click on the RUN button (top right corner).</p>
+<p>The simulator will identify the source files and, if necessary, perform the compiling, assembling and linking to get the executable.
+Finally, the simulator will invoke the executable and show the program's output (if there is any).</p>
+<p><strong>NOTE</strong>: The simulator stops the program's execution when (i) the program invokes the system call (<em>syscall</em>) exit, or (ii) when the execution finds invalid instructions.
+In the last case, the simulator may show error messages like "Error: Failed stop: 64 consecutive illegal instructions: 0".
+This is expected in programs that do not call the exit <em>syscall</em>, as the processor doesn't know where the program ends and will continue to execute instructions consecutively, until it finds invalid instructions.</p>
+<h3 id="c-programs-without-libc"><a class="header" href="#c-programs-without-libc">C programs without LibC</a></h3>
+<p>Programs written in C are usually linked to the C standard library and with object files that contain support routines to the application's execution.
+These routines, initialize the C library's data structures, organize the parameters to the main function (<code>_start</code>) and, after returning from the main function, invoke the operating system to signal the end of the application (function <code>exit</code>).</p>
+<h3 id="_start-function-and-exit-syscall"><a class="header" href="#_start-function-and-exit-syscall"><code>_start</code> function and <code>exit</code> <em>syscall</em></a></h3>
+<p>Besides linking the code from multiple object files (<code>.o</code>), the linker must register the address of the entry function of the program on the header of the executable file so that the operating system's loader knows where to start the execution of the program once it starts.
+By default, in C and C++, the program's entry point is defined by the function called <strong>_start</strong>.
+This is a short function that invokes the function <strong>main</strong> and after <strong>main</strong> returns, it invokes the <strong>exit</strong> <em>syscall</em> to inform the operating system that the program has finished.</p>
+<p>When generating the executable files, C and C++ compilers link an object file that has the implementation of this function.
+However, the RISC-V compiler used here doesn't link to such file (nor LibC), this way, it is necessary to include an implementation of the function.</p>
+<p>The following code shows possible implementations to the function <strong>exit</strong> and the function <strong>_start</strong>.
+In this example, the function <strong>exit</strong> consists of a sequence of instructions in assembly language that copies the value of function parameter (code) to the register <code>a0</code>, puts the value 93 on register <code>a7</code> and generates a software interrupt (<code>ecall</code> instruction).
+The software interrupt redirects the execution flow to the operating system, which will use the value on register <code>a7</code> to determine which <em>syscall</em> was requested and the value on register <code>a0</code> as a parameter to the call.</p>
+<pre><code class="language-c">void exit(int code)
+{
+  __asm__ __volatile__(
+    "mv a0, %0           # return code\n"
+    "li a7, 93           # syscall exit (93) \n"
+    "ecall"
+    :             // Output list
+    :"r"(code)    // Input list
+    : "a0", "a7"
+  );
+}
+
+void _start()
+{
+  int ret_code = main();
+  exit(ret_code);
+}
+</code></pre>
+<p>The <strong>_start</strong> function code simply calls the <strong>main</strong> function, which is implemented by the user, and, after <strong>main</strong>'s return, invokes the <strong>exit</strong> function passing the main return value as a parameter.</p>
+<p>You can copy and paste these two functions on your C programs that will be executed on the ALE simulator.
+Alternatively, you can put them in a file called <code>start.c</code> and compile/assemble/link the file with your program.</p>
+<h3 id="read-and-write-syscalls"><a class="header" href="#read-and-write-syscalls"><code>read</code> and <code>write</code> <em>syscalls</em></a></h3>
+<p>In general, programs that execute in computer systems that have an operating system don't have direct access to the system's peripherals (<em>e.g.</em>, monitor, keyboard, mouse, ...), in other words, that can't interact directly with these devices.
+In this case, all interactions with these devices are done via system calls (<em>syscalls</em>).</p>
+<p>The organization of the Linux operating system is strongly based on the concept of files.
+In this context, each file is identified by a path and a name (<em>e.g.</em>, /home/students/john/prog.c).
+In addition to that, when a file is opened by a program, the operating system associates this file with a file descriptor and returns this file descriptor to the program.
+The file descriptor is an integer that must be provided by the program every time it requests the operating system to perform an operation with the file (<em>e.g.</em>, write or read of data).
+In short, to write to (or read from) a file, the program must:</p>
+<ol>
+<li>Invoke the operating system with the <strong>open</strong> <em>syscall</em> to open the file.
+This syscall will open the file and return an integer that corresponds to the file descriptor of the opened file.</li>
+<li>Invoke the <strong>write</strong> or <strong>read</strong> <em>syscall</em> passing as argument the file descriptor of the file and a buffer to write or read data; and, finally</li>
+<li>Invoke the operating system with the <strong>close</strong> <em>syscall</em> to close the file.</li>
+</ol>
+<p>There are three special file descriptors that are always available and don't have to be opened or closed: <code>STDIN</code>, <code>STDOUT</code> and <code>STDERR</code>.
+The values of the file descriptors <code>STDIN</code>, <code>STDOUT</code> and <code>STDERR</code> are 0, 1 e 2, respectively.</p>
+<p>These file descriptors correspond to the standard input, standard output and error output of the program.
+When the program writes to standard output or error output, the operating system shows what was written on the terminal; where the program is being executed.
+In case the program reads from standard input, the operating system (i) waits until the user types something in the standard input and press ENTER, and (ii) returns to the program what was typed in the terminal.</p>
+<p>The following code shows the implementation of a function in C that contains code in RISC-V assembly language to invoke the <em>syscall</em> <strong>read</strong>.
+This function contains a set of RISC-V instructions that adjust the parameters and invoke the operating system to perform the <strong>read</strong> operation through the <strong>read</strong> <em>syscall</em>.</p>
+<pre><code class="language-c">/* read
+ * Parameters:
+ *  __fd:  file descriptor of the file to be read.
+ *  __buf: buffer to store the data read.
+ *  __n:   maximum amount of bytes to be read.
+ * Return:
+ *  Number of bytes read.
+ */
+int read(int __fd, const void *__buf, int __n)
+{
+    int ret_val;
+  __asm__ __volatile__(
+    "mv a0, %1           # file descriptor\n"
+    "mv a1, %2           # buffer \n"
+    "mv a2, %3           # size \n"
+    "li a7, 63           # syscall read code (63) \n"
+    "ecall               # invoke syscall \n"
+    "mv %0, a0           # move return value to ret_val\n"
+    : "=r"(ret_val)                   // Output list
+    : "r"(__fd), "r"(__buf), "r"(__n) // Input list
+    : "a0", "a1", "a2", "a7"
+  );
+  return ret_val;
+}
+
+</code></pre>
+<p>As you don't have access to the C standard library, you can use the function above to perform read operations from the standard input.
+To do so, just call the function <strong>read</strong> to the file descriptor of value 0.
+To use it, you must allocate a buffer, that can be a global variable, like the example below.
+Note that the global variable (<code>input_buffer</code>) is an array with 10 characters, a 10 byte array.
+After reading the data, the <strong>read</strong> function writes the read bytes to the provided buffer and returns the amount of bytes read.
+The last parameter of the <strong>read</strong> function indicates the maximum amount of bytes that must be read.
+In case the amount of bytes that can be read is greater than this value, the <strong>read</strong> function just writes the maximum amount of bytes (10 in the example below) on the input buffer and returns.
+The remaining bytes are stored in an internal buffer of the operating system and are returned when the <strong>read</strong> function is called again.</p>
+<pre><code class="language-c">/* Buffer to store the data read */
+char input_buffer[10];
+
+int main()
+{
+  /* fd = 0 : reads from standard input (STDIN) */
+  int n = read(0, (void*) input_buffer, 10);
+  /* … */
+  return 0;
+}
+
+</code></pre>
+<p>The following code shows a possible C implementation of the function <strong>write</strong>.
+This C function contains a code in RISC-V assembly language to invoke the system call (<em>syscall</em>) <strong>write</strong>.
+It invokes the operating system to <strong>write</strong> <strong>__n</strong> bytes from the buffer __buf on the file (or device) indicated by the file descriptor, parameter __fd.
+When __fd = 1, this function writes to the standard output (STDOUT).</p>
+<pre><code class="language-c">/* write
+ * Parameters:
+ *  __fd:  files descriptor where that will be written.
+ *  __buf: buffer with data to be written.
+ *  __n:   amount of bytes to be written.
+ * Return:
+ *  Number of bytes effectively written.
+ */
+void write(int __fd, const void *__buf, int __n)
+{
+  __asm__ __volatile__(
+    "mv a0, %0           # file descriptor\n"
+    "mv a1, %1           # buffer \n"
+    "mv a2, %2           # size \n"
+    "li a7, 64           # syscall write (64) \n"
+    "ecall"
+    :   // Output list
+    :"r"(__fd), "r"(__buf), "r"(__n)    // Input list
+    : "a0", "a1", "a2", "a7"
+  );
+}
+
+</code></pre>
+<p>Again, as you don't have access to the C standard library, you can use the function above to write to the standard output of the program, in other words, the terminal where your program was executed.
+To do so, just call the function <strong>write</strong> to the file descriptor 1.
+The code below shows an example where the <strong>write</strong> function is called to show a string on the output terminal.</p>
+<pre><code class="language-c">/* Allocates a global string with 5 bytes.
+ *   Note: the break line character, \n is encoded
+ *       with a single byte */
+char my_string[] = "1969\n";
+
+int main()
+{
+  /* Prints the first 5 characters from the string on
+   * the standard output, in other words, 1, 9, 6, 9 and break line. */
+  write(1, my_string, 5);
+
+  return 0;
+}
+
+</code></pre>
+<p>The ALE simulator expects a break line character (<code>\n</code>) to print the content written to the standard output on the terminal.
+This way, you must add a break line character at the end of your buffer or call the function write again with a string that has the break line character.
+The example above shows a program that prints a string with 5 characters ending with a break line.</p>
+<h3 id="complete-example"><a class="header" href="#complete-example">Complete example</a></h3>
+<p>The following program combines all the parts discussed above and implements a program that reads a string from the standard input, makes specific modifications to the string, and writes the modified string to the standard output.</p>
+<pre><code class="language-c">int read(int __fd, const void *__buf, int __n){
+    int ret_val;
+  __asm__ __volatile__(
+    "mv a0, %1           # file descriptor\n"
+    "mv a1, %2           # buffer \n"
+    "mv a2, %3           # size \n"
+    "li a7, 63           # syscall write code (63) \n"
+    "ecall               # invoke syscall \n"
+    "mv %0, a0           # move return value to ret_val\n"
+    : "=r"(ret_val)  // Output list
+    : "r"(__fd), "r"(__buf), "r"(__n)    // Input list
+    : "a0", "a1", "a2", "a7"
+  );
+  return ret_val;
+}
+
+void write(int __fd, const void *__buf, int __n)
+{
+  __asm__ __volatile__(
+    "mv a0, %0           # file descriptor\n"
+    "mv a1, %1           # buffer \n"
+    "mv a2, %2           # size \n"
+    "li a7, 64           # syscall write (64) \n"
+    "ecall"
+    :   // Output list
+    :"r"(__fd), "r"(__buf), "r"(__n)    // Input list
+    : "a0", "a1", "a2", "a7"
+  );
+}
+
+void exit(int code)
+{
+  __asm__ __volatile__(
+    "mv a0, %0           # return code\n"
+    "li a7, 93           # syscall exit (64) \n"
+    "ecall"
+    :   // Output list
+    :"r"(code)    // Input list
+    : "a0", "a7"
+  );
+}
+
+void _start()
+{
+  int ret_code = main();
+  exit(ret_code);
+}
+
+#define STDIN_FD  0
+#define STDOUT_FD 1
+
+/* Buffer to store the data read */
+char input_buffer[10];
+
+
+int main()
+{
+  /* Reads a string from standard input */
+  int n = read(STDIN_FD, (void*) buffer, 10);
+
+  /* Modifies the string */
+
+  /* Replaces the first character with the letter M */
+  buffer[0]   = 'M';
+
+  /* Replaces the last character (n-1) with an exclamation mark and
+   * Adds a newline character to the buffer immediately after the string
+   * NOTE: In the ALE simulator, if the input is typed in the terminal
+   * and followed by pressing Enter, the last character will be a '\n'.
+   */
+  buffer[n-1]   = '!';
+  buffer[n]     = '\n';
+
+  /* Prints the read string and the two added characters
+   * in standard output. */
+  write(STDOUT_FD, (void*) buffer, n+2);
+
+  return 0;
+}
+</code></pre>
+<p>During its execution, the program invokes the operating system to read a string from the standard input, <em>i.e.</em>, from the terminal displayed by the simulator.
+The operating system, in turn, waits until the user types something in the terminal and presses ENTER.
+It then stores the typed string in the buffer provided by the program and returns the number of bytes read.
+Figure 3.1.1 shows the simulator's terminal.
+In this case, to enter data into the standard input, simply click on the terminal window, type the text, and press ENTER.</p>
+<div style="text-align:center">
+<img src="img/ch03_01_01.png" alt="simulator terminal"/>
+<p><span class="caption">Figure 3.1.1: Simulator terminal.</span></p>
+</div>
+<h3 id="enabling-system-calls-in-ale"><a class="header" href="#enabling-system-calls-in-ale">Enabling System Calls in ALE</a></h3>
+<p>The ALE simulator is configurable and allows users to run applications with or without system call (<em>syscall</em>) support.
+To enable or disable <em>syscalls</em>, or to choose which <em>syscalls</em> are available, you can click on the Operating System menu (penguin icon) and adjust the options, as illustrated in Figure 3.1.2.</p>
+<div style="text-align:center">
+<img src="img/ch03_01_02.png" alt="adjust syscalls"/>
+<p><span class="caption">Figure 3.1.2: Adjusting System Call Options in ALE.</span></p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="execution-with-the-assistant"><a class="header" href="#execution-with-the-assistant">Execution with the Assistant</a></h2>
+<p>The ALE simulator supports the use of execution assistants that automatically run one or more tests with the loaded code and produce a report with information about the submitted code and the results of the tests.</p>
+<h3 id="overview-of-the-execution-assistant"><a class="header" href="#overview-of-the-execution-assistant">Overview of the Execution Assistant</a></h3>
+<p>The assistant is encoded in the URL that points to the simulator.
+This link, for example, contains the address of the simulator and the code for an assistant that is loaded when the simulator is opened.
+You can click the link and inspect the menu that appears after clicking the arrow next to the RUN button.
+Figure 3.2.1 illustrates accessing the debugging assistant.</p>
+<div style="text-align:center">
+<img src="img/ch03_02_01.png" alt="accessing assistant"/>
+<p><span class="caption">Figure 3.2.1: Accessing the Assistant in the ALE Simulator.</span></p>
+</div>
+<p>When you click on the Assistant button, the simulator will open a window with information about the debugging assistant.
+The information provided depends on the specific assistant.
+Figure 3.2.2 shows the assistant loaded from the link above.
+Note that it includes the RUN TESTS button, which is used to start the tests.</p>
+<div style="text-align:center">
+<img src="img/ch03_02_02.png" alt="assitant window"/>
+<p><span class="caption">Figure 3.2.2: Example of a window with assistant information. In this case, the assistant contains three tests: 1. Addition, 2. Subtraction and 3. Multiplication.</span></p>
+</div>
+<h3 id="running-a-program-with-the-execution-assistant"><a class="header" href="#running-a-program-with-the-execution-assistant">Running a program with the execution assistant</a></h3>
+<p>To test your program with the debugging assistant, simply open the simulator with a link that includes an assistant (<a href="https://riscv-programming.org/ale/#select_url_content=TjRJZ3RnaGdsZ2RnK2dCd2djd0tZZ0Z3aEFHaEJBWndLZ0lCY0laUzRDQmpBSnlnVk14QUhwV0FDQVVRQThJd0VBRzFRY0E5Z0RNT2hZbVFxa090Qmt3NEFkR0ZBR2k2ODRBRlVBa25BQVNxUVFsUjBjSEFJSkVTNVNuQURLOVJxUUMrSGNYVkZoVklBRHBXTUZFQUV3QlhZUUpXYVhzNUFJQXJBaFVRTlEwRUxSMEFHVkVhQ0VFQUpWUU03VTl2WDM4Z2tJaW8xaHBSR0JoVUdsSW9Cc1Rra0FCdU5UVWFRV2tPQUdGOG1raUlVaTBPVkI1U1ZCaFFnaHM3V1VjWEpWSmdOUTRPZXBneU9uQ1dyUUFLQUVvdG1CMmRnbkR6T25PZXErdlNBQXNTQVBDb0RnQmVEaWFBTzRjQXpHVXozRTRwQUFxcnhFc1ZXOGdCVUVFZ2c0Y3pJcUpoWGxFeU5FaUpneURFOXdtYlgyS1RPVDJ1SEdFOGpveFV5djMrcUNCT1R5aFRwMmtlMnhlN3dJQVQyVFJhSk41Q0hDQkZlSjFwSlZJNU42engyN0Nrb1ZDdTFGa3o4YVBrNGltYjFoU3FnclFhWEoyYncrWHdDRUNWY0ExRUpBMWoxQnBnS1NzaEFBbmpBYUY1d3U2SFJ4emh4THBTZG50MFJBR1NiZVhRS0tGWUtRVGdBR0hBQVRobGN1dXdma0FDTXd6eUFwR0ZqSDQwbUFMUVFGT0JqRWZBaW9LaXdmWE9TRUFFWDBBRGtUZ0FEQUFrd0FnbmdBMUJ3dXhuM0NwZWlvNDIyeTRHb09JVGdCQ0U0UUFIUWVUaDNOZTZnYWNhVEI1blhjQjhzVjNsbXdTaVpBMjV1aUx4SWtSVjRRdFZDaE1rVWcrMDBqaE9oWGNUNUt2UHluRDFNN0l1eTZIZ0VCRENNVUp3QUt4eGpCazZVc0cyS29BRUo1bnF1WkNoS0k0U2tBQVF1RTRqaUJZY0ZwZzA2SzByY2dqeUg4YUdrQmhXRzRmaEZnQktRREJnSnlBRWdjZXA3dHBDcUJrQmdBN2RuMkFsRHR3UERtUGVvVDhWMm9iOWlKUlRrYVFVbkFHUmtRZUJPdjdjcFdrd0lCdVlCYnFjUkU3Tk9FcThhcHZ4LUoyM1ljTEo3Z1R2dTVhdnUrVnpNZUVxQWFUczdpbUZXOW1CbzVINWVOK2JsR3RjLTUtZ0VHYXdLRUp6aHJ1VHpCYXVab1dxRVZxOGJHS1JPT0VHYk1SQWdxR3JnVWdFRzZIcmlGNnVWWEg2UG53U1I4aWhsUk9aNXRHbENGc203bkVmc21iWmg4RFVGZ21wYXRjYU9aVmpXNmhVRTRqWXR1MjBtZUVXd25EcU80NkdkY3huemtCK29nWWM4REVIcEF6YnVjZTdCZVdDVlFNaFhFcEJlVjdDQW9wak5ITWo0Z0l0bEorWitnWDlSd29VSHF0SzZEZUJDQlFUQmNZUGJzSkdJU2RxR0RUUm1FNFhoQkYwSUQ2WWNDcEZHZGJ5NkdRLVJNTk1TeGJFSGh4eDBvZHhxVktUMkhBellPbmk4T0p0MUV5VEhCeWFaRkZLWWphbUE5Um9nNlZ0K2s3cTl4bE0rWkhDV2FHTTFEblpCMitkV1Rtb29jUVhzUjVYbW9KVll0dnY1WDZDRCtvc2VhTDdqaFpGMFU4ckZzcVVrZDVxV3RhS1FBTEtxWXdnaFFIa0RwT2dWUldldDZKSyttYy1ycTBEN1ZTTWp1WlJqMU9BQU14dzlWdE0rOTFUVUprSHIxb2RXY0MxcU40MnRnTG5nQUZTelNPanBqdXBIdkxRdVM1cmF1RzI2WnplMFhCN2hzNXB4WjVuWmU0alhsZGQ2M1UrNWZYRTlBV3E5TE9QdmVXbjBnV0JxQVFkQnNHdlFod2lnN3JXbTBWRERHd3lQSWU4M1ZrOW85RGpITVJvMk1Ia2IrTnRqeGZFQ2NUYWRrNkpsTVB0VGFkMHdwalAwOHowZmcyenhjN1FaM016Z3ZGblNSdzUrMldYTXVLeExMbWR3ZVR5SGNGWU9YRnNyRjZIdHU0aFcxZ3NDZUJCOWFPbFRFYk91TUI4aHdBWGh3T0F2d0FCODd0MktTa3lMbWRrcEFBRGFLUU5Ub092cDBBQXVqN00wRkNtWUVGYXRTZjRvaHlBTWpqSzFMVWRCZlFzTytIOFRoSEJ2Z0FCNWNaTVZTcFFoU3ZKaEQ0amVGMElSdlpleHV4QWF3OWh2WkY1SG1PZ3dxaEpDb0RVSlRpY0FBakhHVmdVZE5haXdJZG9JaFVveUVnQlFXZzVBa1pRaW9CU0xRdjRNQTJFUURpdXhGaEdZVHhaaitKWTBnQVEwQk5FakhNU2hVb042UFRBVmNOc0Y1eUJLUThlUUxXSEFBQmlFQUFEbm9ZTUlBaGdDZUMwSEFNSWNHRWFHVjR0SnhBLUM3SGlYSkFSZEFGQ3lIeVdrRXhVQUFIa013SkJ1dlVySUp3LUdpQXpHY1R3dVQ4bWlBdEQ4RklBd015R0l6SkV6SUtSc0cwaDJnQVo0WUplWngwd2VETkhDSmtnQXg1ZUU0LVFvQUFFZFhKU0JPVkFNNHdpWWk0S1FKR0JRbVV3RFZnc1BjME1CQnNUYkwyYXdqZ1p0UkJoREhtMllLLTR1UkF1ZUFiQkdmc21wZ0ZnRllTQVBCbEhCVGJtYkNZcndBamlCUEtjSkZieGZZTEY4SDZOT0p4WVUweWhUQU4yLVppV1RoQlNDd0V3eFJnbDNKTGdFQWV3NjdJRXdLQU5tRG9DQ3NzWlEwWmxjY0NBUUdzSmdmK2VBbVZRR1FIeWlBUXdoVlN4RlR5c1ZFcUd6U3RjckttQXZLU0FRRFNVcTFBS3ExWDh2MEZxblY4cjFWbXdOZHkxVlJyK1ZPRk5hSzhWNnJkQ212bUJBUHhxQnFDaURnRFFHRU5BQURXR1pSQThGTlc4Nmc1QnZXSUZFREdDd2NBQUJ1K1JYSXNEakR3QUE3R2s1TnlhcFY0QmpIQWJ3cUFqbm9Jb0dnRmdBQW1TQ0lCM0I0RUtyUWZJcXRXV2xwQU00eU5OdGVMVnZjTzRJQUE=" target="_blank">such as this one</a>), load your program into the simulator (see Chapter 3.1), and click the RUN TESTS button in the assistant's window.
+Figure 3.2.3 shows an example where the assistant is running tests with the loaded program.
+In this case, the program produced the correct results for tests 1 (Addition) and 2 (Subtraction) and is currently being executed with test 3.</p>
+<div style="text-align:center">
+<img src="img/ch03_02_03.png" alt="assistant execution"/>
+<p><span class="caption">Figure 3.2.3:Example of test execution with the assistant.</span></p>
+</div>
+<p>Some assistants provide an option to download a report with the test results at the end of the testing process.
+Figure 3.2.4 shows an example where, after the tests are completed, the assistant displays the score and provides a link to retrieve the report.</p>
+<div style="text-align:center">
+<img src="img/ch03_02_04.png" alt="test execution"/>
+<p><span class="caption">Figure 3.2.4: Example of test execution.</span></p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="debugging-code-with-ale"><a class="header" href="#debugging-code-with-ale">Debugging Code with ALE</a></h2>
+<p>The ALE simulator features an interactive interface that allows users to control program execution and inspect the values of registers and memory.
+This interface is very similar to the GDB debugger's interface, enabling users to debug their code's execution.</p>
+<h3 id="overview-of-the-interactive-interface"><a class="header" href="#overview-of-the-interactive-interface">Overview of the interactive interface</a></h3>
+<p>To enable the interactive execution interface, simply click the arrow next to the RUN button and select the "Debug" option, as illustrated in Figure 3.3.1.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_01.png" alt="debug option"/>
+<p><span class="caption">Figure 3.3.1: Select the "Debug" option.</span></p>
+</div>
+<p>Once you clicked on the Debug option, the simulator will open an interactive terminal where you can enter commands to control execution and/or inspect the state of the memory and registers of the RISC-V processor.
+Figure 3.3.2 shows an interactive terminal.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_02.png" alt="interactive terminal"/>
+<p><span class="caption">Figure 3.3.2: Interactive terminal in the ALE simulator.</span></p>
+</div>
+<h3 id="debugging-commands"><a class="header" href="#debugging-commands">Debugging commands</a></h3>
+<p>To see the complete list of available commands in debug mode, you can run the <code>help</code> command in the interactive terminal.
+Simply type <code>help</code> in the interactive terminal and press ENTER.
+A portion of the command list displayed by the <code>help</code> command is shown below.</p>
+<pre><code class="language-bash">run
+  Run till interrupted.
+until &lt;address&gt;
+  Run until address or interrupted.
+step [&lt;n&gt;]
+  Execute n instructions (1 if n is missing).
+peek &lt;res&gt; &lt;addr&gt;
+  Print value of resource res (one of r, f, c, m) and address addr.
+  For memory (m) up to 2 addresses may be provided to define a range
+  of memory locations to be printed.
+  examples: peek r x1   peek c mtval   peek m 0x4096
+peek pc
+  Print value of the program counter.
+peek all
+  Print value of all non-memory resources
+poke res addr value
+  Set value of resource res (one of r, c or m) and address addr
+  Examples: poke r x1 0xff  poke c 0x4096 0xabcd
+symbols
+  List all the symbols in the loaded ELF file(s).
+quit
+  Terminate the simulator
+</code></pre>
+<p>The following table summarizes the main commands available in the interactive interface of the ALE simulator:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Command</th><th style="text-align: left">Description</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>symbols</code></td><td style="text-align: left">Shows the address of symbols (<em>e.g.</em>, <code>_start</code>, <code>loop</code>, <code>end</code>, <code>result</code>) of the program. The address is displayed in hexadecimal format (<em>e.g.</em>, <code>0x11180</code>).</td></tr>
+<tr><td style="text-align: left"><code>until &lt;address&gt;</code></td><td style="text-align: left">Executes instructions of the program until a certain address. The address must be provided in hexadecimal format (<em>e.g.</em>, <code>0x11180</code>).</td></tr>
+<tr><td style="text-align: left"><code>step [n=1]</code></td><td style="text-align: left">Executes the next n instructions</td></tr>
+<tr><td style="text-align: left"><code>peek r &lt;register&gt;</code></td><td style="text-align: left">Displays the value stored in register <register> (<em>e.g.</em>, <code>peek r x1</code> or <code>peek r mtval</code>). The value is shown in hexadecimal format. The command <code>peek r all</code> shows the value of all registers.</td></tr>
+<tr><td style="text-align: left"><code>peek m &lt;address&gt;</code></td><td style="text-align: left">Displays the value stored in the memory word at address <code>&lt;address&gt;</code>. The value is shown in hexadecimal format.</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>poke r &lt;register&gt; &lt;value&gt;</code></td><td style="text-align: left">Modifies the content of register <code>&lt;register&gt;</code> with the value <code>&lt;value&gt;</code>. For example, the command <code>poke r x1 0xff</code> stores the value <code>0xff</code> in register <code>x1</code>.</td></tr>
+<tr><td style="text-align: left"><code>poke m &lt;address&gt; &lt;value&gt;</code></td><td style="text-align: left">Modifies the content of the memory location associated with address <code>&lt;address&gt;</code> with the value <code>&lt;value&gt;</code>. For example, the command <code>poke m 0x800 0xfe</code> writes the value <code>0xfe</code> to the memory location associated with address <code>0x800</code>.</td></tr>
+<tr><td style="text-align: left"><code>run</code></td><td style="text-align: left">Executes the program until it terminates through a system call <code>exit</code> or encounters invalid instructions.</td></tr>
+</tbody></table>
+</div>
+<h3 id="interactive-execution-example"><a class="header" href="#interactive-execution-example">Interactive execution example</a></h3>
+<p>In this section, we will show an example of interactive execution with the ALE simulator.
+For this, we will use the program <code>simple-debug.s</code>, as follows:</p>
+<pre><code class="language-riscvasm">.globl _start
+
+_start:
+  li x11, 21          # loads the value 21 into register x11
+  li x12, 21          # loads the value 21 into register x12
+  add x10, x11, x12   # adds the contents of registers x11 and x12 and
+                      # stores the result in register x10
+  li a7, 93           # loads the value 93 into register a7
+  ecall               # generates a software interrupt
+</code></pre>
+<p>This program loads the value 21 into registers <code>x11</code> and <code>x12</code>, performs the addition of these values, and stores the result in register <code>x10</code>.
+Finally, it invokes the <code>exit</code> <em>syscall</em>.
+To do this, the program loads the value 93 into register <code>a7</code> and generates a software interrupt by executing the <code>ecall</code> instruction.</p>
+<p>The first step is to load the <code>simple-debug.s</code> file into the simulator.
+To do this, simply use the file upload button (blue), as discussed in Chapter 3.1.
+Next, you should open the interactive execution terminal by clicking on the debug button, as presented in Chapter 3.3.1.
+Once you open the interactive execution terminal, you should see messages indicating that the <code>simple-debug.s</code> program has been assembled and its execution has begun in interactive mode, as illustrated in Figure 3.3.3.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_03.png" alt="debug option"/>
+<p><span class="caption">Figure 3.3.3: Interactive terminal opened right after loading the file <code>simple-debug.s</code>.</span></p>
+</div>
+<p>Now, simply click on the terminal and type commands to interact with the simulator.
+To illustrate this procedure, we will execute the following sequence of commands:</p>
+<pre><code>peek r x11
+step
+peek r x11
+</code></pre>
+<p>Figure 3.3.4 shows the interactive terminal after executing the commands <code>peek r x11</code>, <code>step</code>, and <code>peek r x11</code>.
+The first command shows that the content of register <code>x11</code> is zero (0x00000000).
+The second command advances the execution of the program by one instruction.
+Note that the simulator displays the instruction <code>addi x11, x0, 0x15</code>, which adds the content of register <code>x0</code> (which is always zero<sup class="footnote-reference"><a href="#1">1</a></sup>) to the constant <code>0x15</code> (<em>i.e.</em>, 21 in decimal), and stores the result in register <code>x11</code>.
+In our assembly language program, we had the instruction <code>li x11, 21</code> (load immediate), which loads the value 21 into register <code>x11</code>.
+The load immediate instruction is a pseudo-instruction (it does not exist in the architecture) and is usually transformed by the assembler into an <code>addi</code> instruction.
+Finally, the third command inspects the content of register <code>x11</code>.
+Note that this time it contains the value 21 (0x00000015).</p>
+<p>Also note that, the interactive terminal outputs some informations regarding the instruction that was executed in the format:</p>
+<div style="text-align:center">
+#{Inst Num} 0 {Mem Addr} {Inst Code} {Inst Type} {Val} {Mnemonic}
+</div>
+<ul>
+<li><strong>Inst Num</strong>: number of the machine instruction that was executed</li>
+<li><strong>Mem Addr</strong>: memory address of the instruction that was executed.</li>
+<li><strong>Inst Code</strong>: code of the instruction that was executed.</li>
+<li><strong>Inst Type</strong>: can be either <code>r</code> if the instruction uses only register or <code>m</code> if there is a memory access (store or load).</li>
+<li><strong>Val</strong>: value stored in the <code>rd</code> register for instructions of type <code>r</code> or stored in the memory position accessed for type <code>m</code> instructions.</li>
+<li><strong>Mnemonic</strong>: assembly mnemonic of the executed instruction.</li>
+</ul>
+<p>The second occurrence of the instruction #1 can be ignored.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_04.png" alt="interactive terminal commands"/>
+<p><span class="caption">Figure 3.3.4: Interactive terminal after executing the commands <code>peek r x11</code>, <code>step</code> and <code>peek r x11</code>.</span></p>
+</div>
+<p>Now, we will execute the following sequence of commands to advance our program to the end, that is, until we invoke the <code>exit</code> <em>syscall</em>.</p>
+<pre><code>step
+step
+step
+peek r x10
+step
+</code></pre>
+<p>The first three <code>step</code> commands advance the execution to the <code>ecall</code> instruction, executing the instructions <code>li x12, 21</code>, <code>add x10, x11, x12</code>, and <code>li a7, 93</code>.
+The next command displays the content of register <code>x10</code>.
+Finally, the last command advances the execution, causing the simulator to execute the <code>ecall</code> instruction.
+Figure 3.3.5 shows the interactive terminal after executing these commands.
+Notice that, again, the <code>li</code> instructions from the source program were encoded as <code>addi</code> instructions.
+Also, the value of register <code>x10</code> has been changed to <code>0x2a</code> (42 in decimal).
+Finally, note that the program ended with code 42.
+This occurred because we passed the value 42<sup class="footnote-reference"><a href="#2">2</a></sup> as a parameter to the <code>exit</code> <em>syscall</em>.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_05.png" alt="interactive terminal commands 2"/>
+<p><span class="caption">Figure 3.3.5: Interactive terminal after executing the commands <code>step</code>, <code>step</code>, <code>step</code>, <code>peek r x10</code>, <code>step</code>.</span></p>
+</div>
+<p>In the example above, we used the <code>step</code> command to advance the program execution instruction by instruction.
+However, in many situations, it is useful to advance the simulation automatically to a certain point in the program.
+To do this, you can use the <code>until</code> command.
+This command takes as a parameter the address of the instruction where you want to advance to.</p>
+<p>In Figure 3.3.5, we see that the <code>ecall</code> instruction is at address <code>0x000110c4</code>.
+Therefore, if we wanted to advance execution to this point, we could execute the command <code>until 0x000110c4</code>.
+Figure 3.3.6 shows the interactive terminal after executing the command <code>until 0x000110c4</code>.
+Note that the simulator displayed the execution of the first four instructions of the program.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_06.png" alt="interactive terminal commands 3"/>
+<p><span class="caption">Figure 3.3.6: Interactive terminal after executing the command <code>until 0x000110c4</code>.</span></p>
+</div>
+<h4 id="identifying-the-address-associated-with-instructions"><a class="header" href="#identifying-the-address-associated-with-instructions">Identifying the address associated with instructions</a></h4>
+<p>As seen above, you can use the address of an instruction to advance execution to the desired instruction.
+To do this, you need the address of the instruction.
+The most direct way to obtain the address of an instruction is by using the disassembler.
+To do this, you need to disassemble the final executable file.
+Chapter 2.6 discusses how to use the disassembler.</p>
+<p>Another way to identify the address of an instruction is from the label that precedes it in the code.
+In our example, the address of the first instruction corresponds to the address of the label <code>_start</code>.
+To identify the addresses associated with the labels in your program, simply execute the <code>symbols</code> command.</p>
+<p>If the instruction of interest does not have a preceding label, you can add a new label (with a name different from other labels in the program).
+This label will not affect code generation, <em>i.e</em>, the set of emitted instructions will remain the same.
+The following code snippet shows the <code>simple-debug-2.s</code> program modified with a label to facilitate the identification of the address of the instruction <code>li a7, 93</code>.
+When you load this program into the simulator and execute the symbols command in the interactive terminal, you will see the addresses associated with the symbols <code>_start</code> and <code>before_exit</code>.</p>
+<pre><code class="language-riscvasm">.globl _start
+_start:
+  li x11, 21          # loads the value 21 into register x11
+  li x12, 21          # loads the value 21 into register x12
+  add x10, x11, x12   # adds the contents of registers x11 and x12 and 
+                      # stores the result in register x10
+before_exit:
+  li a7, 93           # loads the value 93 into register a7
+  ecall               # generates a software interrupt
+
+</code></pre>
+<h3 id="terminal-io-in-debug-mode"><a class="header" href="#terminal-io-in-debug-mode">Terminal IO in Debug Mode</a></h3>
+<p>When in debug mode, there are two ways in which you can provide an input to your program in case a <code>read</code> <em>syscall</em> is called.
+The first one is to use the <strong>Standard IO</strong> textbox to load the input, and the second is to use the <code>write-stdin</code> command followed by the input string on the terminal input.
+These two ways are demonstrated with images below.</p>
+<div style="text-align:center">
+<img src="img/ch03_03_07.png" alt="os standard io"/>
+<p><span class="caption">Figure 3.3.7: Loading input using the OS <strong>Standard IO</strong>.</span></p>
+</div>
+<div style="text-align:center">
+<img src="img/ch03_03_08.png" alt="os standard io after"/>
+<p><span class="caption">Figure 3.3.8: Simulator after loading the input.</span></p>
+</div>
+<p>Figure 3.3.7 shows how to use the OS to load the input that will be read by the program.
+First go to the OS tab (1) and write your input on the textbox (2), then run your code in debug mode until the point where the input is expected (3).
+Finally, load the input by clicking on the button (4).
+Figure 3.3.8 presents the terminal after loading the input, as the code just reads an input and writes it to STDOUT you can see that the input (<em>Hello World</em>) is printed on the screen and the program exits.
+The input can also be loaded prior to the program execution (step 4 before 3).</p>
+<div style="text-align:center">
+<img src="img/ch03_03_09.png" alt="io blocked program"/>
+<p><span class="caption">Figure 3.3.9: Blocked program waiting for input in Debug Mode.</span></p>
+</div>
+<div style="text-align:center">
+<img src="img/ch03_03_10.png" alt="write-stdin command usage"/>
+<p><span class="caption">Figure 3.3.10: Command <code>write-stdin</code> is used to set input in debug mode.</span></p>
+</div>
+<p>The other way that can be used to provide input to your program is via the <code>write-stdin</code> command.
+When the program reaches a point where the <code>read</code> <em>syscall</em> is invoked, it blocks waiting for the input, and the user can use the terminal as shown in Figure 3.3.9.
+Figure 3.3.10 shows the <code>write-stdin</code> followed by the input string being used, and after the command the program continues its execution using the provided input.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>In RISC-V, register <code>x0</code> always holds the fixed value of zero.
+Even if an instruction tries to write something to this register, the value zero will be preserved in the register.</p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>The <code>exit</code> <em>syscall</em> expects a parameter, which is the exit code, in register <code>a0</code> (which is an alias for register <code>x10</code>).</p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p>Although the object file contains the same instructions as the final executable file, the address of the instructions is usually modified by the linking process.
+Therefore, you should use the final executable file when you want to identify the addresses of the instructions.</p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="enabling-and-interacting-with-peripherals"><a class="header" href="#enabling-and-interacting-with-peripherals">Enabling and Interacting with Peripherals</a></h2>
+<p>The ALE simulator features a set of peripherals that can be enabled to perform a set of tasks, such as controlling a car in a 3D environment, playing a song with a MIDI player, or displaying an image on a canvas.</p>
+<h3 id="overview-of-peripherals-and-how-they-are-connected-to-the-system"><a class="header" href="#overview-of-peripherals-and-how-they-are-connected-to-the-system">Overview of Peripherals and how they are connected to the system</a></h3>
+<p>Peripherals are input/output devices that are connected to the computer using a bus.
+The interaction between the CPU and such devices can be performed either by port-mapped IO or Memory-mapped IO.
+The former uses special instructions to access the peripheral's register and internal memory, while the latter uses some memory regions in order to perform I/O operations with the peripheral device.
+More information about this topic can be found in Chapter 8 of the book <a href="https://riscv-programming.org/book.html">An Introduction to Assembly Programming with RISC-V</a>.</p>
+<div style="text-align:center">
+<img src="img/ch03_04_01.png" alt="enabling external devices"/>
+<p><span class="caption">Figure 3.4.1: Steps to enable external devices.</span></p>
+</div>
+<p>In the ALE simulator, the peripherals are accessed with MMIO, and the region of the memory
+that is reserved to each peripheral is set when the peripheral is enabled on the simulator
+Figure 3.4.1 shows how to access the devices tab of the simulator (1), and a device can be enabled by clicking on the <code>+</code> symbol next to the device description (2,3).</p>
+<p>The result of the actions performed in Figure 3.4.1 can be seen in Figure 3.4.2.
+Two devices were enabled on the simulator: <code>self_driving_car.js</code> (car) and <code>general_purpose_timer.js</code> (GPT).
+The car device is mapped to the MMIO region <code>0xFFFF0100 - 0xFFFF0300</code>, and GPT is mapped to the MMIO region <code>0xFFFF0300 - 0xFFFF0500</code>, which means that the base address for the car and GPT will be <code>0xFFFF0100</code> and <code>0xFFFF0300</code>, respectively.</p>
+<div style="text-align:center">
+<img src="img/ch03_04_02.png" alt="mmio region"/>
+<p><span class="caption">Figure 3.4.2: MMIO region (Memory slot) assigned to each enabled device.</span></p>
+</div>
+<p><strong>NOTE</strong>: It is important to notice that the memory slot, and hence the peripheral base address, may change according to the order they are inserted into the simulator.
+You may want to take this into account when adding peripherals to your system.</p>
+<h3 id="accessing-peripherals-with-mmio"><a class="header" href="#accessing-peripherals-with-mmio">Accessing Peripherals with MMIO</a></h3>
+<p>Each peripheral uses its memory slot in its own manner, Chapter 5 provides each peripheral's usage of its memory slot.
+The interaction with the peripheral is done via reads/writes from/to memory.
+The example below shows an example on how to get GPS readings from the Self-Driving Car peripheral using the base address from Figure 3.4.2.</p>
+<pre><code class="language-riscvasm">.globl _start
+.set CAR_BASE_ADDRESS, 0xFFFF0100
+
+_start:
+  lw t0, CAR_BASE_ADDRESS # loads the value associated with the symbol 
+                          # CAR_BASE_ADDRESS (0xFFFF0100) in register t0
+  li t1, 1                # loads the value 1 into register t1
+  sb t1, 0(t0)            # stores the value 1 in car's 
+                          # base address+0x00 to trigger GPS reading
+  busy_wait_loop:
+    lb t1, 0(t0)            # loads value from base address+0x00
+    bnez t1, busy_wait_loop # checks if value is 0, 
+                            # indicating that GPS reading is over
+  lw t1, 4(t0)            # loads Euler angle X in register t1
+  lw t2, 8(t0)            # loads Euler angle Y in register t2
+  lw t3, 12(t0)           # loads Euler angle Z in register t3
+  lw t4, 16(t0)           # loads X-axis position in register t4
+  lw t5, 20(t0)           # loads Y-axis position in register t5
+  lw t6, 24(t0)           # loads Z-axis position in register t6
+  # ...
+
+  # Invoke the exit syscall
+  li a7, 93           # Loads the syscall ID (93) into register a7
+  ecall               # Generates a software interrupt
+</code></pre>
+<p>The example above illustrates the process of reading the GPS coordinates from the car GPS.
+First the base address of the car peripheral is loaded in register <code>t0</code>, then we set the byte in base address to <code>1</code>, signaling the car to read the GPS coordinates.
+Since it takes some time for the car device to perform the reading and update the values, we do what is called <strong>busy waiting</strong>, by checking the memory address that indicates if the reading is complete in a loop.
+When the value is set to <code>0</code>, the execution flow gets out of the loop, and proceeds to load the GPS coordinates that were read, available at addresses <code>base+0x04</code>, <code>base+0x08</code>, <code>base+0x0C</code>, <code>base+0x10</code>, <code>base+0x14</code>, and <code>base+0x18</code> into registers <code>t1</code>, <code>t2</code>, <code>t3</code>, <code>t4</code>, <code>t5</code>, and <code>t6</code>, respectively.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="peripherals-in-ale"><a class="header" href="#peripherals-in-ale">Peripherals in ALE</a></h1>
+<p>This chapter presents how the peripherals use their respective memory regions, relevant to peripheral interactions via MMIO.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="canvas"><a class="header" href="#canvas">Canvas</a></h2>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"><strong>Address</strong></th><th style="text-align: left"><strong>Size</strong></th><th style="text-align: left"><strong>Description</strong></th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>base+0x00</code></td><td style="text-align: left">byte</td><td style="text-align: left">Storing <code>1</code> triggers the canvas to write an array of up to 504 bytes representing up to 126 pixels to the screen. The register is set to <code>0</code> when writing is completed.</td></tr>
+<tr><td style="text-align: left"><code>base+0x02</code></td><td style="text-align: left">half</td><td style="text-align: left">Array size (in bytes).</td></tr>
+<tr><td style="text-align: left"><code>base+0x04</code></td><td style="text-align: left">word</td><td style="text-align: left">The initial position to write the array on the canvas. The canvas is represented as a 512x512x4-byte one-dimensional array representing 512x512 pixels.</td></tr>
+<tr><td style="text-align: left"><code>base+0x08</code></br>to</br><code>base+0x200</code></td><td style="text-align: left">word</td><td style="text-align: left">504-byte array representing up to 126 pixels. Each pixel takes 4 bytes, one byte for each value: Red, Green, Blue, and Alpha (in this order).</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="general-purpose-timer"><a class="header" href="#general-purpose-timer">General Purpose Timer</a></h2>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"><strong>Address</strong></th><th style="text-align: left"><strong>Size</strong></th><th style="text-align: left"><strong>Description</strong></th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>base+0x00</code></td><td style="text-align: left">byte</td><td style="text-align: left">Storing <code>1</code> triggers the GPT device to start reading the current system time. The register is set to <code>0</code> when the reading is completed.</td></tr>
+<tr><td style="text-align: left"><code>base+0x04</code></td><td style="text-align: left">word</td><td style="text-align: left">Stores the time (in milliseconds) at the moment of the last reading by the GPT.</td></tr>
+<tr><td style="text-align: left"><code>base+0x08</code></td><td style="text-align: left">word</td><td style="text-align: left">Storing <em>v</em> &gt; 0 programs the GPT to generate an external interruption after <em>v</em> milliseconds. It also sets this register to <code>0</code> after <em>v</em> milliseconds (immediately before generating the interruption).</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="midi-synthesizer"><a class="header" href="#midi-synthesizer">MIDI Synthesizer</a></h2>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"><strong>Address</strong></th><th style="text-align: left"><strong>Size</strong></th><th style="text-align: left"><strong>Description</strong></th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>base+0x00</code></td><td style="text-align: left">byte</td><td style="text-align: left">Storing <em>ch</em> ≥ 0 triggers the synthesizer to start playing a MIDI note in the channel <em>ch</em>.</td></tr>
+<tr><td style="text-align: left"><code>base+0x02</code></td><td style="text-align: left">short</td><td style="text-align: left">Instrument ID.</td></tr>
+<tr><td style="text-align: left"><code>base+0x04</code></td><td style="text-align: left">byte</td><td style="text-align: left">Note.</td></tr>
+<tr><td style="text-align: left"><code>base+0x05</code></td><td style="text-align: left">byte</td><td style="text-align: left">Note velocity.</td></tr>
+<tr><td style="text-align: left"><code>base+0x06</code></td><td style="text-align: left">short</td><td style="text-align: left">Note duration.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="self-driving-car"><a class="header" href="#self-driving-car">Self Driving Car</a></h2>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"><strong>Address</strong></th><th style="text-align: left"><strong>Size</strong></th><th style="text-align: left"><strong>Description</strong></th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>base+0x00</code></td><td style="text-align: left">byte</td><td style="text-align: left">Storing <code>1</code> triggers the GPS device to start reading the coordinates and rotation of the car. The register is set to <code>0</code> when the reading is completed.</td></tr>
+<tr><td style="text-align: left"><code>base+0x01</code></td><td style="text-align: left">byte</td><td style="text-align: left">Storing <code>1</code> triggers the Line Camera device to capture an image. The register is set to <code>0</code> when the capture is completed.</td></tr>
+<tr><td style="text-align: left"><code>base+0x02</code></td><td style="text-align: left">byte</td><td style="text-align: left">Storing <code>1</code> triggers the Ultrasonic Sensor device to measure the distance in front of the car. The register is set to <code>0</code> when the measurement is completed.</td></tr>
+<tr><td style="text-align: left"><code>base+0x04</code></td><td style="text-align: left">word</td><td style="text-align: left">Stores the Euler angle X of the car rotation at the moment of the last reading by the GPS.</td></tr>
+<tr><td style="text-align: left"><code>base+0x08</code></td><td style="text-align: left">word</td><td style="text-align: left">Stores the Euler angle Y of the car rotation at the moment of the last reading by the GPS.</td></tr>
+<tr><td style="text-align: left"><code>base+0x0C</code></td><td style="text-align: left">word</td><td style="text-align: left">Stores the Euler angle Z of the car rotation at the moment of the last reading by the GPS.</td></tr>
+<tr><td style="text-align: left"><code>base+0x10</code></td><td style="text-align: left">word</td><td style="text-align: left">Stores the X-axis of the car position at the moment of the last reading by the GPS.</td></tr>
+<tr><td style="text-align: left"><code>base+0x14</code></td><td style="text-align: left">word</td><td style="text-align: left">Stores the Y-axis of the car position at the moment of the last reading by the GPS.</td></tr>
+<tr><td style="text-align: left"><code>base+0x18</code></td><td style="text-align: left">word</td><td style="text-align: left">Stores the Z-axis of the car position at the moment of the last reading by the GPS.</td></tr>
+<tr><td style="text-align: left"><code>base+0x1C</code></td><td style="text-align: left">word</td><td style="text-align: left">Stores the distance (in centimeters) between the Ultrasonic sensor and the nearest obstacle. Returns <code>-1</code> if there’s no obstacle within 20m.</td></tr>
+<tr><td style="text-align: left"><code>base+0x20</code></td><td style="text-align: left">byte</td><td style="text-align: left">Sets the steering wheel direction. Negative values indicate steering to the left, positive values indicate steering to the right.</td></tr>
+<tr><td style="text-align: left"><code>base+0x21</code></td><td style="text-align: left">byte</td><td style="text-align: left">Sets the engine direction.</br><code>1</code>: forward.</br><code>0</code>: off.</br><code>-1</code>: backward.</td></tr>
+<tr><td style="text-align: left"><code>base+0x22</code></td><td style="text-align: left">byte</td><td style="text-align: left">Sets the hand break. (<code>1</code> = enabled)</td></tr>
+<tr><td style="text-align: left"><code>base+0x24</code></td><td style="text-align: left">256-byte array</td><td style="text-align: left">Stores the image captured by the Line Camera. Each byte represents the luminance of a pixel.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="serial-port"><a class="header" href="#serial-port">Serial Port</a></h2>
+<p>The serial port is connected to the terminal (stdout and stdin).</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"><strong>Address</strong></th><th style="text-align: left"><strong>Size</strong></th><th style="text-align: left"><strong>Description</strong></th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>base+0x00</code></td><td style="text-align: left">byte</td><td style="text-align: left">Storing <code>1</code> triggers the serial port to write (to the stdout) the byte stored at <code>base+0x01</code>. The register is set to <code>0</code> when writing is completed.</td></tr>
+<tr><td style="text-align: left"><code>base+0x01</code></td><td style="text-align: left">byte</td><td style="text-align: left">Byte to be written. ID</td></tr>
+<tr><td style="text-align: left"><code>base+0x02</code></td><td style="text-align: left">byte</td><td style="text-align: left">Storing <code>1</code> triggers the serial port to read (from the stdin) a byte and store it at <code>base+0x03</code>. The register is set to <code>0</code> when reading is completed.</td></tr>
+<tr><td style="text-align: left"><code>base+0x03</code></td><td style="text-align: left">byte</td><td style="text-align: left">Byte read. <strong>NULL</strong> (<code>0</code>) when stdin is empty.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="developing-new-execution-assistants"><a class="header" href="#developing-new-execution-assistants">Developing New Execution Assistants</a></h1>
+<p>The ALE simulator provides an Execution Assistant class that is embedded in the simulator URL, and allows a programmatic interaction with the simulator capabilities, relevant when creating grading scripts with test cases.
+This chapter provides an overview of the Assistant class and how to develop and use new ones.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="overview-of-how-an-assistant-works"><a class="header" href="#overview-of-how-an-assistant-works">Overview of How an Assistant Works</a></h2>
+<p>As explained in Chapter 1, the ALE simulator is a web-based simulator that is a mix of JavaScript code, WebAssembly artefacts and Unity Assets (for some peripherals). One of the classes that composes the simulator architecture is the Assistant Script component.
+This component’s class can be extended to customize the assistant modal window, like adding buttons to perform certain actions, add functions that must be executed when the page is initially loaded, and also test cases that will be executed when the <code>RUN TESTS</code> button is clicked.</p>
+<p>An example of an assistant script is shown below.</p>
+<pre><code class="language-javascript">// Import assistant and logging modules
+import { UI_Helper, Assistant_Script } from "./modules/assistant.js";
+import { LocalReport } from "./modules/connection.js";
+
+class Ex2_2 extends Assistant_Script {
+  constructor() {
+    super();
+    this.ui = new UI_Helper("Exercise 2.2: Simple Symbol Calculator");
+    let report = new LocalReport();
+    this.connections.push(report);
+
+    // Enable syscalls and set the program stack
+    this.predefined_args = [
+      "--newlib",
+      "--setreg",
+      "sp=0x7FFFFFC",
+      "--isa",
+      "acdfimsu",
+    ];
+
+    this.ui.add_test(
+      "Compilation",
+      (_) =&gt; {
+        report.restart();
+        return this.generic_compile_test()();
+      },
+      { fail_early: true }
+    );
+
+    // Add fixed tests
+    let test_id = 1;
+    this.ui.add_test(
+      `Test ${test_id++} (question) - Add`,
+      this.simple_equality_test(`2 + 3\n`, `5\n`, {
+        compare_function: (a, b) =&gt; a.trim() == b.trim(),
+      })
+    );
+    this.ui.add_test(
+      `Test ${test_id++} (question) - Sub`,
+      this.simple_equality_test(`7 - 7\n`, `0\n`, {
+        compare_function: (a, b) =&gt; a.trim() == b.trim(),
+      })
+    );
+    this.ui.add_test(
+      `Test ${test_id++} (question) - Mul`,
+      this.simple_equality_test(`4 * 2\n`, `8\n`, {
+        compare_function: (a, b) =&gt; a.trim() == b.trim(),
+      })
+    );
+
+    for (let i = 0; i &lt; 3; i++) {
+      let a = this.randint(0, 9);
+      let b = this.randint(0, 9 - a);
+      this.ui.add_test(
+        `Test ${test_id++} - Add`,
+        this.simple_equality_test(`${a} + ${b}\n`, `${a + b}\n`, {
+          compare_function: (a, b) =&gt; a.trim() == b.trim(),
+        })
+      );
+      a = this.randint(0, 9);
+      b = this.randint(0, a);
+      this.ui.add_test(
+        `Test ${test_id++} - Sub`,
+        this.simple_equality_test(`${a} - ${b}\n`, `${a - b}\n`, {
+          compare_function: (a, b) =&gt; a.trim() == b.trim(),
+        })
+      );
+      a = this.randint(0, 3);
+      b = this.randint(0, 3);
+      this.ui.add_test(
+        `Test ${test_id++} - Mul`,
+        this.simple_equality_test(`${a} * ${b}\n`, `${a * b}\n`, {
+          compare_function: (a, b) =&gt; a.trim() == b.trim(),
+        })
+      );
+    }
+
+    this.ui.final_result = (_) =&gt; {
+      report.report["test_results"] = this.ui.test_results;
+      let grade = 0;
+      if (this.ui.test_results[0] != 0) {
+        let n_tests = this.ui.test_results.length;
+        for (let i = 1; i &lt; n_tests; i++) {
+          grade += this.ui.test_results[i];
+        }
+        grade = (grade * 10) / (n_tests - 1);
+      }
+      report.report["final_grade"] = grade;
+      window.parent.postMessage({
+        comment: this.ui.test_results,
+        grade: grade,
+        finish_test: true,
+      });
+      let blob = report.generate_report();
+      return `Grade: ${grade}. Download your test report from Assistant execution report &lt;a href=${window.URL.createObjectURL(
+        blob
+      )} download="ex2_2.report"&gt;(click here)&lt;/a&gt;.`;
+    };
+  }
+
+  randint(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+}
+
+new Ex2_2();
+</code></pre>
+<p>In order to encode this assistant in an URL, the flow shown in Figure 5.1.1 needs to be followed.
+First you need to go to the <code>Settings</code> tab (1), load the assistant file (2), and then generate the link (3).
+The link can then be copied using the <code>COPY TO CLIPBOARD BUTTON</code> (4).</p>
+<div style="text-align:center">
+<img src="img/ch05_01_01.png" alt=" assistant link generation"/>
+<p><span class="caption">Figure 5.1.1: Assistant link generation workflow.</span></p>
+</div>
+<p>When opening the link in a new tab, the assistant modal will have the test cases loaded, as shown in Figure 5.1.2.</p>
+<div style="text-align:center">
+<img src="img/ch05_01_02.png" alt=" assistant modal"/>
+<p><span class="caption">Figure 5.1.2: Assistant modal when opening the embedded link.</span></p>
+</div>
+<p>When generating such links, one additional thing that can be done is attaching active peripherals to the link. For instance, if the tests to be performed use a given peripheral device, they can be enabled prior to generating the link, in this way, when accessing the embedded link the peripheral will be already enabled.</p>
+<p>The assistant scripts used in the exercise book are available <a target="_blank" href="https://github.com/discovery-unicamp/ale-exercise-assistants">here</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="api-of-the-main-components"><a class="header" href="#api-of-the-main-components">API of the Main Components</a></h2>
+<h3 id="ui-helper"><a class="header" href="#ui-helper">UI Helper</a></h3>
+<h3 id="simulator-api"><a class="header" href="#simulator-api">Simulator API</a></h3>
+<h3 id="interacting-with-peripherals"><a class="header" href="#interacting-with-peripherals">Interacting with Peripherals</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="designing-new-peripheral-devices"><a class="header" href="#designing-new-peripheral-devices">Designing New Peripheral Devices</a></h1>
+<p>TODO: add peripheral device creation tutorial. Possible sections</p>
+<ul>
+<li>Overview of the Peripheral System (Explain how peripherals interact with the simulator (events, etc.))</li>
+<li>Peripheral Programming Interface (List and describe the main classes and methods that must be implemented to design new peripheral devices)</li>
+<li>Example (Show a complete example)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
+<ul>
+<li><a href="appendix_installation.html">Installing Compilation Tools on Your Computer</a></li>
+<li><a href="appendix_online-compilation.html">Using Compilation Tools in Online Systems</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="installing-compilation-tools-on-your-computer"><a class="header" href="#installing-compilation-tools-on-your-computer">Installing Compilation Tools on Your Computer</a></h2>
+<p>The examples in this manual use the CLANG compiler.
+The compiler is available in the computers at the Institute of Computing labs; however, if you wish to use it on your own computer, you can try the following options:</p>
+<h3 id="installing-on-a-gnulinux-distribution"><a class="header" href="#installing-on-a-gnulinux-distribution">Installing on a GNU/Linux Distribution</a></h3>
+<p>You can install a Linux distribution on your machine or on a virtual machine using, for example, Oracle VirtualBox.</p>
+<p>On Debian-based distributions (e.g., Ubuntu 22.04), type the following commands in the terminal (in this tutorial we install CLANG 15 and LLD 15, but newer versions should work, in case version 15 is no longer available in your distro repository):</p>
+<pre><code>sudo apt update
+sudo apt install clang-15 lld-15
+</code></pre>
+<p>The system will ask for your password (or the superuser password of the machine).
+Once the process is complete, you will have the environment set up to execute the commands used in the examples in this manual.</p>
+<h3 id="installing-on-windows-with-wsl2"><a class="header" href="#installing-on-windows-with-wsl2">Installing on Windows with WSL2</a></h3>
+<p>Starting with Windows 10, Microsoft allows users to install a GNU/Linux environment on Windows.
+The following tutorial discusses this process: <a href="https://learn.microsoft.com/en-us/windows/wsl/install#manual-installation-steps">Install WSL | Microsoft Learn</a>.
+There are also several tutorials on YouTube (<em>e.g.</em>: <a href="https://www.youtube.com/watch?v=24T7V7e5rGY">1</a> e <a href="https://www.youtube.com/watch?v=1DcFIVKbOyE">2</a>).</p>
+<p>After installation, start a terminal from your WSL distribution and type the following commands (for Debian-based distributions):</p>
+<pre><code>sudo apt update
+sudo apt install clang-15 lld-15
+</code></pre>
+<p>The system will ask for your password (or the superuser password of the machine).
+Once the process is complete, you will have the environment set up to execute the commands used in the examples in this manual.</p>
+<p><strong>Note</strong>: Depending on the version of the Linux distribution being used, the version of clang may not be available in the Package Manager repositories.
+This can be resolved by manually adding the repository or by upgrading to a more recent version (e.g., Ubuntu 20.04 =&gt; Ubuntu 22.04).
+Also, different versions of CLANG can be used, but different behavior may arise.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="using-compilation-tools-in-online-systems"><a class="header" href="#using-compilation-tools-in-online-systems">Using Compilation Tools in Online Systems</a></h2>
+<h3 id="replit-compilation-tools"><a class="header" href="#replit-compilation-tools">REPLIT Compilation Tools</a></h3>
+<p>Replit is an online integrated development environment (IDE) that gives you access to a small virtual machine that can be accessed with the browser.
+It allows you to edit and compile programs using tools such as <code>clang</code> and <code>lld</code>.
+To do so, you must install the tools <code>clang</code> and <code>lld</code>.
+The installation might be different, given that this environment has evolved in recent years.
+The tested installation process consisted in the following steps:</p>
+<ul>
+<li>log in the platform</li>
+<li>create a <code>repl</code> to C language</li>
+<li>execute the command in the Shell (here version 15 is beiung used, but newer versions should work)
+<pre><code>sudo apt install clang-15 lld-15
+</code></pre>
+</li>
+</ul>
+<p>Replit automatically saves your files (as long as you are logged in), but installed packages are erased when the virtual machine is turned off or restarted. Therefore, CLANG must be installed again (command above) every time the virtual machine is started.</p>
+<h3 id="compilation-toolds-in-google-colab"><a class="header" href="#compilation-toolds-in-google-colab">Compilation toolds in Google Colab</a></h3>
+<p>Google Colab is also an online integrated development environment (IDE) that gives access to a small virtual machine that can be accessed with the browser.
+It is also possible to use this environment to edit and compile programs with <code>clang</code> and <code>lld</code>.
+The following tutorial shows how to install such tools and compile a small program written in assebly to RISC-V.</p>
+<p>Assembling RISC-V programs with Colab: https://colab.research.google.com/drive/1PM-3ulMFqeo4Ce2hIwir3IftcWyQ0SMh?usp=sharing</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
